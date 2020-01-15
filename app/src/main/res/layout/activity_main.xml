@@ -38,14 +38,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/text_mi_rezultat"
+        android:id="@+id/tv_mi_rezultat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/rezultat"
-        android:text="62"
+        android:text=""
         android:textSize="40sp"
         app:layout_constraintEnd_toStartOf="@id/text_mi"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,7 +61,7 @@
         android:text="@string/mi"
         android:textSize="30sp"
         app:layout_constraintEnd_toStartOf="@id/text_dvotocka"
-        app:layout_constraintStart_toEndOf="@id/text_mi_rezultat"
+        app:layout_constraintStart_toEndOf="@id/tv_mi_rezultat"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <TextView
@@ -86,19 +86,19 @@
         android:layout_marginEnd="16dp"
         android:text="@string/vi"
         android:textSize="30sp"
-        app:layout_constraintEnd_toStartOf="@id/text_vi_rezultat"
+        app:layout_constraintEnd_toStartOf="@id/tv_vi_rezultat"
         app:layout_constraintStart_toEndOf="@id/text_dvotocka"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <TextView
-        android:id="@+id/text_vi_rezultat"
+        android:id="@+id/tv_vi_rezultat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="64dp"
         android:background="@drawable/rezultat"
-        android:text="100"
+        android:text=""
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/text_vi"
@@ -112,14 +112,21 @@
         android:background="#222222"
         app:layout_constraintTop_toBottomOf="@id/text_dvotocka" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_rezultati"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/crta"
         app:layout_constraintBottom_toTopOf="@id/btn_novi_upis"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_rezultati"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"/>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/btn_novi_upis"
