@@ -1,5 +1,7 @@
 package com.example.belablok;
 
+import com.example.belablok.klase.Upis;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +12,7 @@ public class UpisStorage {
     }
 
     static  private UpisStorage instance;
-    static UpisStorage getInstance(){
+    public static UpisStorage getInstance(){
         if(instance == null) {
             instance = new UpisStorage();
         }

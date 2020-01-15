@@ -1,4 +1,4 @@
-package com.example.belablok;
+package com.example.belablok.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,9 +11,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.belablok.R;
+import com.example.belablok.UpisStorage;
+import com.example.belablok.baze.DatabaseLegs;
+import com.example.belablok.baze.DatabaseUpisi;
+import com.example.belablok.klase.Upis;
+import com.example.belablok.adapteri.recAdapterRezultati;
+
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements recAdapterRezultati.OnUpisListener{
 
     private TextView oTvMiRezultat;
     private TextView oTvViRezultat;
@@ -22,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
+
+    DatabaseUpisi mDatabaseUpisi = new DatabaseUpisi(this);
+    DatabaseLegs mDataBaseLegs = new DatabaseLegs(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        mAdapter = new recAdapterRezultati();
+        mAdapter = new recAdapterRezultati(mDatabaseUpisi.getData(mDataBaseLegs.getLastId()), this);
         recyclerView.setAdapter(mAdapter);
 
         //------------------Rezultat-----------------
@@ -66,5 +76,10 @@ public class MainActivity extends AppCompatActivity {
 
         oTvMiRezultat.setText(Integer.toString(nMi));
         oTvViRezultat.setText(Integer.toString(nVi));
+    }
+
+    @Override
+    public void onUpisClick(int position){
+        startActivity(new Intent(MainActivity.this, UpisBodovaActivity.class));
     }
 }

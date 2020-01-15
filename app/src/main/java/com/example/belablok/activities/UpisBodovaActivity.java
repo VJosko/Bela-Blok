@@ -1,4 +1,4 @@
-package com.example.belablok;
+package com.example.belablok.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +10,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.belablok.R;
+import com.example.belablok.UpisStorage;
+import com.example.belablok.baze.DatabaseLegs;
+import com.example.belablok.baze.DatabaseUpisi;
+import com.example.belablok.klase.Upis;
 
 public class UpisBodovaActivity extends AppCompatActivity {
 
@@ -134,23 +140,10 @@ public class UpisBodovaActivity extends AppCompatActivity {
                     nZvanjaVi = 0;
                 }
                 Upis upis =new Upis(mDatabaseLegs.getLastId(), nBodoviMi, nBodoviVi, nZvanjaMi, nZvanjaVi);
-                UpisStorage.getInstance().addUpis(upis);
-                AddData(upis);
+                //UpisStorage.getInstance().addUpis(upis);
+                mDatabaseUpisi.addData(upis);
                 startActivity(new Intent(UpisBodovaActivity.this, MainActivity.class));
             }
         });
-    }
-
-    public void AddData(Upis upis){
-        boolean insertData = mDatabaseUpisi.addData(upis);
-        if(insertData) {
-            toastMessage("Data Successfully Inserted");
-        } else{
-            toastMessage("Something's wrong. I can feel it");
-        }
-    }
-
-    private void toastMessage(String message){
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

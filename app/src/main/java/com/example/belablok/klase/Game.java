@@ -1,10 +1,10 @@
-package com.example.belablok;
+package com.example.belablok.klase;
 
 public class Game {
-    String sIgrac1;
-    String sIgrac2;
-    String sIgrac3;
-    String sIgrac4;
+    public String sIgrac1;
+    public String sIgrac2;
+    public String sIgrac3;
+    public String sIgrac4;
 
     public Game(String Igrac1, String Igrac2, String Igrac3, String Igrac4){
         sIgrac1 = Igrac1;

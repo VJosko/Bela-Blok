@@ -1,4 +1,4 @@
-package com.example.belablok;
+package com.example.belablok.adapteri;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,35 +8,64 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.belablok.R;
+import com.example.belablok.UpisStorage;
+import com.example.belablok.activities.MainActivity;
+import com.example.belablok.baze.DatabaseLegs;
+import com.example.belablok.baze.DatabaseUpisi;
+import com.example.belablok.klase.Leg;
+import com.example.belablok.klase.Upis;
+
 import java.util.List;
 
 public class recAdapterRezultati extends RecyclerView.Adapter<recAdapterRezultati.MyViewHolder> {
-    private List<Upis> upisi = UpisStorage.getInstance().readUpise();
+
+    List<Upis> upisi;
+    private OnUpisListener mOnUpisListener;
+
+    //private List<Upis> upisi = UpisStorage.getInstance().readUpise();
     private List<Object> holderi;
     private String title = "Upisi";
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView textViewRbr;
         public TextView textViewBodoviMi;
         public TextView textViewBodoviVi;
+        OnUpisListener onUpisListener;
 
-        public MyViewHolder(View v) {
+        public MyViewHolder(View v, OnUpisListener onUpisListener) {
             super(v);
             textViewRbr = v.findViewById(R.id.tv_rbr);
             textViewBodoviMi = v.findViewById(R.id.tv_bodovi_mi);
             textViewBodoviVi = v.findViewById(R.id.tv_bodovi_vi);
+            this.onUpisListener = onUpisListener;
+
+            v.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            onUpisListener.onUpisClick(getAdapterPosition());
+
         }
     }
 
+    public interface OnUpisListener{
+        void onUpisClick(int position);
+    }
 
-    public recAdapterRezultati() {
+
+    public recAdapterRezultati(List<Upis> upis, OnUpisListener onUpisListener) {
+
+        upisi = upis;
+        this.mOnUpisListener = onUpisListener;
     }
 
     @NonNull
     @Override
     public recAdapterRezultati.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rec_rezultati, parent, false);
-        MyViewHolder vh = new MyViewHolder(v);
+        MyViewHolder vh = new MyViewHolder(v, mOnUpisListener);
         return vh;
     }
 

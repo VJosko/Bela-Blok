@@ -1,11 +1,11 @@
-package com.example.belablok;
+package com.example.belablok.klase;
 
 public class Upis {
-    int nLegId;
-    int nBodoviMi;
-    int nBodoviVi;
-    int nZvanjaMi;
-    int nZvanjaVi;
+    public int nLegId;
+    public int nBodoviMi;
+    public int nBodoviVi;
+    public int nZvanjaMi;
+    public int nZvanjaVi;
 
     public Upis(int LegId, int BodoviMi, int BodoviVi, int ZvanjaMi, int ZvanjaVi){
         nLegId = LegId;
