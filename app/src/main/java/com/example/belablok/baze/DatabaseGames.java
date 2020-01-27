@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 
 import com.example.belablok.klase.Game;
 
+import java.util.ArrayList;
+
 public class DatabaseGames extends SQLiteOpenHelper {
 
     private static final String TAG = "DatabaseGames";
@@ -50,11 +52,17 @@ public class DatabaseGames extends SQLiteOpenHelper {
         long result = db.insert(TABLE_NAME, null, contentValues);
     }
 
-    public Cursor getData(){
+    public ArrayList<Game> getData(){
+        ArrayList<Game> games = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_NAME;
         Cursor data = db.rawQuery(query, null);
-        return data;
+        while(data.moveToNext()){
+            Game game = new Game(data.getString(1),data.getString(2),
+                    data.getString(3),data.getString(4));
+            games.add(game);
+        }
+        return games;
     }
 
     public int getLastId(){

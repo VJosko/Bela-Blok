@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 
 import com.example.belablok.klase.Leg;
 
+import java.util.ArrayList;
+
 public class DatabaseLegs extends SQLiteOpenHelper {
 
     private static final String TAG = "DatabaseLegs";
@@ -46,11 +48,16 @@ public class DatabaseLegs extends SQLiteOpenHelper {
         long result = db.insert(TABLE_NAME, null, contentValues);
     }
 
-    public Cursor getData(){
+    public ArrayList<Leg> getData(){
+        ArrayList<Leg> legs = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_NAME;
         Cursor data = db.rawQuery(query, null);
-        return data;
+        while(data.moveToNext()){
+            Leg leg = new Leg(data.getInt(1),data.getInt(2));
+            legs.add(leg);
+        }
+        return legs;
     }
 
     public int getLastId(){
