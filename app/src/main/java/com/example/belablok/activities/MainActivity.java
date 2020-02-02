@@ -13,15 +13,18 @@ import android.widget.TextView;
 
 import com.example.belablok.R;
 import com.example.belablok.UpisStorage;
+import com.example.belablok.baze.DatabaseGames;
 import com.example.belablok.baze.DatabaseLegs;
 import com.example.belablok.baze.DatabaseUpisi;
 import com.example.belablok.klase.Upis;
 import com.example.belablok.adapteri.recAdapterRezultati;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements recAdapterRezultati.OnUpisListener{
 
+    private TextView oTvDijeli;
     private TextView oTvMiRezultat;
     private TextView oTvViRezultat;
     private ImageView oImgNatrag;
@@ -30,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements recAdapterRezulta
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
+    DatabaseGames mDatabaseGames = new DatabaseGames(this);
     DatabaseUpisi mDatabaseUpisi = new DatabaseUpisi(this);
     DatabaseLegs mDataBaseLegs = new DatabaseLegs(this);
 
@@ -63,8 +67,13 @@ public class MainActivity extends AppCompatActivity implements recAdapterRezulta
         mAdapter = new recAdapterRezultati(mDatabaseUpisi.getData(mDataBaseLegs.getLastId()), this);
         recyclerView.setAdapter(mAdapter);
 
+        //-----------------Dijeli--------------------
+        oTvDijeli = findViewById(R.id.tv_dijeli);
+        ArrayList<String> igraci = mDatabaseGames.getCurrentPlayers();
+        oTvDijeli.setText(igraci.get(0));
+
         //------------------Rezultat-----------------
-        List<Upis> upisi = UpisStorage.getInstance().readUpise();
+        List<Upis> upisi = mDatabaseUpisi.getData(mDataBaseLegs.getLastId());
         int nMi = 0;
         int nVi = 0;
         for (Upis u: upisi) {

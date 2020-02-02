@@ -1,6 +1,8 @@
 package com.example.belablok.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
@@ -11,32 +13,57 @@ import com.example.belablok.adapteri.pagerAdapterPovijest;
 import com.example.belablok.fragments.FragmentGames;
 import com.example.belablok.fragments.FragmentLegs;
 import com.example.belablok.fragments.FragmentUpisi;
+import com.example.belablok.interfaces.IPovijestActivity;
 
-public class PovijestActivity extends AppCompatActivity {
+public class PovijestActivity extends AppCompatActivity implements IPovijestActivity{
 
-    private pagerAdapterPovijest mPagerAdapterPovijest;
-    private ViewPager mViewPager;
+    //private pagerAdapterPovijest mPagerAdapterPovijest;
+    //private ViewPager mViewPager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_povijest);
 
-        mPagerAdapterPovijest = new pagerAdapterPovijest(getSupportFragmentManager());
-
-        mViewPager = findViewById(R.id.container);
-        setupViewPager(mViewPager);
+        init();
     }
 
-    private void setupViewPager(ViewPager viewPager){
-        pagerAdapterPovijest adapter = new pagerAdapterPovijest(getSupportFragmentManager());
-        adapter.addFragment(new FragmentGames(), "Games");
-        adapter.addFragment(new FragmentLegs(), "Legs");
-        adapter.addFragment(new FragmentUpisi(), "Upisi");
-        viewPager.setAdapter(adapter);
+    private void init(){
+        FragmentGames fragmentGames = new FragmentGames();
+        doFragmentTransaction(fragmentGames, "games", false, "");
     }
 
-    public void setViewPager(int fragmentNumber){
-        mViewPager.setCurrentItem(fragmentNumber);
+    private void doFragmentTransaction(Fragment fragment, String tag, boolean addToBackStack, String message){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        if(!message.equals("")){
+            Bundle bundle = new Bundle();
+            bundle.putString(getString(R.string.intent_message), message);
+            fragment.setArguments(bundle);
+        }
+
+        transaction.replace(R.id.main_container, fragment, tag);
+
+        if(addToBackStack){
+            transaction.addToBackStack(tag);
+        }
+        transaction.commit();
     }
+
+    @Override
+    public void inflateFragment(int nFragment, String message) {
+        switch (nFragment){
+            case 1:
+                FragmentLegs fragmentLegs = new FragmentLegs();
+                doFragmentTransaction(fragmentLegs, "Legs", true, message);
+                break;
+
+            case 2:
+                FragmentUpisi fragmentUpisi = new FragmentUpisi();
+                doFragmentTransaction(fragmentUpisi, "Upisi", true, message);
+                break;
+        }
+    }
+
 }

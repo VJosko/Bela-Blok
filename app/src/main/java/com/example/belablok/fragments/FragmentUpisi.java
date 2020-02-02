@@ -1,5 +1,6 @@
 package com.example.belablok.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,12 +20,27 @@ import com.example.belablok.adapteri.recAdapterUpisi;
 import com.example.belablok.baze.DatabaseGames;
 import com.example.belablok.baze.DatabaseLegs;
 import com.example.belablok.baze.DatabaseUpisi;
+import com.example.belablok.interfaces.IPovijestActivity;
 
 public class FragmentUpisi extends Fragment implements recAdapterUpisi.OnUpisListener{
+
+    private static final String TAG = "FragmentUpisi";
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
+    private IPovijestActivity mIPovijestActivity;
+    private String mIncomingMessage = "";
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Bundle bundle = this.getArguments();
+        if(bundle != null){
+            mIncomingMessage = bundle.getString(getString(R.string.intent_message));
+        }
+    }
 
     @Nullable
     @Override
@@ -38,10 +54,16 @@ public class FragmentUpisi extends Fragment implements recAdapterUpisi.OnUpisLis
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        mAdapter = new recAdapterUpisi(mDatabaseUpisi.getData(3), this);
+        mAdapter = new recAdapterUpisi(mDatabaseUpisi.getData(Integer.parseInt(mIncomingMessage)), this);
         recyclerView.setAdapter(mAdapter);
 
         return view;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mIPovijestActivity = (PovijestActivity)getActivity();
     }
 
     @Override

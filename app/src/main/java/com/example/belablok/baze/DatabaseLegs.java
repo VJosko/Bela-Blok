@@ -70,4 +70,28 @@ public class DatabaseLegs extends SQLiteOpenHelper {
         }
         return nId;
     }
+
+    public ArrayList<Leg> getLegsByGameId(int id){
+        ArrayList<Leg> legs = new ArrayList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COL1 + " = " + id;
+        Cursor data = db.rawQuery(query, null);
+        while(data.moveToNext()){
+            Leg leg = new Leg(data.getInt(1),data.getInt(2));
+            legs.add(leg);
+        }
+        return legs;
+    }
+
+    public int getLegId(int rbr, int gameId){
+        Leg leg = new Leg(0,0);
+        int id = 0;
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT ID FROM " + TABLE_NAME + " WHERE " + COL2 + " = " + rbr + " AND " + COL1 + " = " + gameId;
+        Cursor data = db.rawQuery(query, null);
+        while(data.moveToNext()){
+            id = data.getInt(0);
+        }
+        return id;
+    }
 }

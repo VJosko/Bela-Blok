@@ -1,5 +1,6 @@
 package com.example.belablok.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,12 +19,19 @@ import com.example.belablok.adapteri.recAdapterRezultati;
 import com.example.belablok.baze.DatabaseGames;
 import com.example.belablok.baze.DatabaseLegs;
 import com.example.belablok.baze.DatabaseUpisi;
+import com.example.belablok.interfaces.IPovijestActivity;
+import com.example.belablok.klase.Game;
+
+import java.util.ArrayList;
 
 public class FragmentGames extends Fragment implements recAdapterGames.OnGameListener{
+
+    private static final String TAG = "FragmentGames";
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
+    private IPovijestActivity mIPovijestActivity;
 
     @Nullable
     @Override
@@ -44,7 +52,15 @@ public class FragmentGames extends Fragment implements recAdapterGames.OnGameLis
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mIPovijestActivity = (IPovijestActivity)getActivity();
+    }
+
+    @Override
     public void onGameClick(int position) {
-        ((PovijestActivity)getActivity()).setViewPager(1);
+        int nId = position + 1;
+        String sId = Integer.toString(nId);
+        mIPovijestActivity.inflateFragment(1, sId);
     }
 }

@@ -1,7 +1,9 @@
 package com.example.belablok.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,10 +12,11 @@ import android.widget.Button;
 import com.example.belablok.R;
 import com.example.belablok.baze.DatabaseGames;
 import com.example.belablok.baze.DatabaseLegs;
+import com.example.belablok.dialog.DialogIgraci;
 import com.example.belablok.klase.Game;
 import com.example.belablok.klase.Leg;
 
-public class menuActivity extends AppCompatActivity {
+public class menuActivity extends AppCompatActivity implements DialogIgraci.Dalje {
 
     private Button oBtnNovaIgra;
     private Button oBtnNastavi;
@@ -31,11 +34,13 @@ public class menuActivity extends AppCompatActivity {
         oBtnNovaIgra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Game game = new Game("ja", "desni", "suigrac", "ljevi");
+                DialogIgraci dialogIgraci = new DialogIgraci();
+                dialogIgraci.show(getSupportFragmentManager(), "DialogIgraci");
+                /*Game game = new Game("ja", "desni", "suigrac", "ljevi");
                 mDatabaseGames.addData(game);
                 Leg leg = new Leg(mDatabaseGames.getLastId(), 0);
                 mDatabaseLegs.addData(leg);
-                startActivity(new Intent(menuActivity.this, MainActivity.class));
+                startActivity(new Intent(menuActivity.this, MainActivity.class));*/
             }
         });
 
@@ -54,5 +59,14 @@ public class menuActivity extends AppCompatActivity {
                 startActivity(new Intent(menuActivity.this, PovijestActivity.class));
             }
         });
+    }
+
+    @Override
+    public void sendInput(String sSuigrac, String sLjevi, String sDesni, String sJa) {
+        Game game = new Game(sJa, sDesni, sSuigrac, sLjevi);
+        mDatabaseGames.addData(game);
+        Leg leg = new Leg(mDatabaseGames.getLastId(), 0);
+        mDatabaseLegs.addData(leg);
+        startActivity(new Intent(menuActivity.this, MainActivity.class));
     }
 }

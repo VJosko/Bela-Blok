@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import com.example.belablok.klase.Game;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseGames extends SQLiteOpenHelper {
 
@@ -74,5 +75,20 @@ public class DatabaseGames extends SQLiteOpenHelper {
             nId = data.getInt(0);
         }
         return nId;
+    }
+
+    public ArrayList<String> getCurrentPlayers(){
+        ArrayList<String> igraci = new ArrayList<>();
+        String sId = Integer.toString(getLastId());
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COL0 + " = " + sId;
+        Cursor data = db.rawQuery(query, null);
+        while(data.moveToNext()){
+            igraci.add(data.getString(1));
+            igraci.add(data.getString(2));
+            igraci.add(data.getString(3));
+            igraci.add(data.getString(4));
+        }
+        return igraci;
     }
 }
