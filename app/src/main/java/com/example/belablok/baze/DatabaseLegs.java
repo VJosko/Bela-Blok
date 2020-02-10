@@ -12,7 +12,7 @@ import com.example.belablok.klase.Leg;
 
 import java.util.ArrayList;
 
-public class DatabaseLegs extends SQLiteOpenHelper {
+public class DatabaseLegs extends SQLiteOpenHelper{
 
     private static final String TAG = "DatabaseLegs";
 
@@ -20,6 +20,11 @@ public class DatabaseLegs extends SQLiteOpenHelper {
     private static final String COL0 = "ID";
     private static final String COL1 = "game_ID";
     private static final String COL2 = "rbr";
+    private static final String COL3 = "bodovi_mi";
+    private static final String COL4 = "bodovi_vi";
+    private static final String COL5 = "dupli";
+    private static final String COL6 = "bodovi_za_p";
+    private static final String COL7 = "zadnji_mjesao";
 
 
     public DatabaseLegs(@Nullable Context context) {
@@ -29,7 +34,7 @@ public class DatabaseLegs extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COL1 +" INT, " + COL2 +" INT)";
+                COL1 +" INT, " + COL2 +" INT, " + COL3 +" INT, " + COL4 +" INT, " + COL5 +" INT, " + COL6 +" INT, " + COL7 +" INT)";
         db.execSQL(createTable);
     }
 
@@ -44,6 +49,11 @@ public class DatabaseLegs extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL1, leg.nGameID);
         contentValues.put(COL2, leg.nRbr);
+        contentValues.put(COL3, leg.nBodoviMi);
+        contentValues.put(COL4, leg.nBodoviVi);
+        contentValues.put(COL5, leg.nDupli);
+        contentValues.put(COL6, leg.nBodoviZaP);
+        contentValues.put(COL7, leg.nZadnjiMjesao);
 
         long result = db.insert(TABLE_NAME, null, contentValues);
     }
@@ -54,7 +64,8 @@ public class DatabaseLegs extends SQLiteOpenHelper {
         String query = "SELECT * FROM " + TABLE_NAME;
         Cursor data = db.rawQuery(query, null);
         while(data.moveToNext()){
-            Leg leg = new Leg(data.getInt(1),data.getInt(2));
+            Leg leg = new Leg(data.getInt(1),data.getInt(2),data.getInt(3),
+                    data.getInt(4),data.getInt(5),data.getInt(6),data.getInt(7));
             legs.add(leg);
         }
         return legs;
@@ -71,20 +82,31 @@ public class DatabaseLegs extends SQLiteOpenHelper {
         return nId;
     }
 
+    public int getLastRbr(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_NAME + " ORDER BY " + COL0 + " DESC LIMIT 1";
+        Cursor data = db.rawQuery(query, null);
+        int nId = -1;
+        while(data.moveToNext()){
+            nId = data.getInt(2);
+        }
+        return nId;
+    }
+
     public ArrayList<Leg> getLegsByGameId(int id){
         ArrayList<Leg> legs = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COL1 + " = " + id;
         Cursor data = db.rawQuery(query, null);
         while(data.moveToNext()){
-            Leg leg = new Leg(data.getInt(1),data.getInt(2));
+            Leg leg = new Leg(data.getInt(1),data.getInt(2),data.getInt(3),
+                    data.getInt(4),data.getInt(5),data.getInt(6),data.getInt(7));
             legs.add(leg);
         }
         return legs;
     }
 
     public int getLegId(int rbr, int gameId){
-        Leg leg = new Leg(0,0);
         int id = 0;
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT ID FROM " + TABLE_NAME + " WHERE " + COL2 + " = " + rbr + " AND " + COL1 + " = " + gameId;
@@ -93,5 +115,53 @@ public class DatabaseLegs extends SQLiteOpenHelper {
             id = data.getInt(0);
         }
         return id;
+    }
+
+    public String getLastLegDuplo(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_NAME + " ORDER BY " + COL0 + " DESC LIMIT 1";
+        Cursor data = db.rawQuery(query, null);
+        String sDuplo = "0";
+        while(data.moveToNext()){
+            sDuplo = data.getString(5);
+        }
+        return sDuplo;
+    }
+
+    public boolean isLegGotov(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COL0 + " = " + id;
+        Cursor data = db.rawQuery(query, null);
+        int Mi = 0;
+        int Vi = 0;
+        int x = 1000;
+        while(data.moveToNext()){
+            Mi = data.getInt(3);
+            Vi = data.getInt(4);
+            x = data.getInt(6);
+        }
+        if((Mi >= x || Vi >= x) && (Mi != Vi)){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public void updateDuplo(int id, String nDuplo){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_NAME + " SET " + COL5 + " = " + nDuplo +
+                " WHERE ID = " + id;
+        db.execSQL(query);
+    }
+
+    public void updateRezultate(int id, int Mi, int Vi){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_NAME + " SET " + COL3 + " = (" + COL3 + " + " + Mi +
+                ") WHERE ID = " + id;
+        db.execSQL(query);
+        query = "UPDATE " + TABLE_NAME + " SET " + COL4 + " = (" + COL4 + " + " + Vi +
+                ") WHERE ID = " + id;
+        db.execSQL(query);
     }
 }

@@ -8,8 +8,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.example.belablok.adapteri.recAdapterLegs;
 import com.example.belablok.klase.Upis;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +26,7 @@ public class DatabaseUpisi extends SQLiteOpenHelper {
     private static final String COL3 = "bodovi_vi";
     private static final String COL4 = "zvanja_mi";
     private static final String COL5 = "zvanja_vi";
+    private static final String COL6 = "mjesao";
 
 
     public DatabaseUpisi(@Nullable Context context) {
@@ -33,7 +36,7 @@ public class DatabaseUpisi extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COL1 +" INT, " + COL2 +" INT, " + COL3 +" INT, " + COL4 + " INT, " + COL5 +" INT)";
+                COL1 +" INT, " + COL2 +" INT, " + COL3 +" INT, " + COL4 + " INT, " + COL5 +" INT, " + COL6 +" INT)";
         db.execSQL(createTable);
     }
 
@@ -51,6 +54,7 @@ public class DatabaseUpisi extends SQLiteOpenHelper {
         contentValues.put(COL3, upis.nBodoviVi);
         contentValues.put(COL4, upis.nZvanjaMi);
         contentValues.put(COL5, upis.nZvanjaVi);
+        contentValues.put(COL6, upis.nMjesao);
 
         long result = db.insert(TABLE_NAME, null, contentValues);
     }
@@ -62,7 +66,7 @@ public class DatabaseUpisi extends SQLiteOpenHelper {
         Cursor data = db.rawQuery(query, null);
         while(data.moveToNext()){
             Upis upis = new Upis(data.getInt(1),data.getInt(2),
-                    data.getInt(3),data.getInt(4),data.getInt(5));
+                    data.getInt(3),data.getInt(4),data.getInt(5),data.getInt(6));
             upisi.add(upis);
         }
         return upisi;
@@ -78,4 +82,48 @@ public class DatabaseUpisi extends SQLiteOpenHelper {
         }
         return nId;
     }
+
+    public int getLastLegId(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_NAME + " ORDER BY " + COL0 + " DESC LIMIT 1";
+        Cursor data = db.rawQuery(query, null);
+        int nLegId = -1;
+        while(data.moveToNext()){
+            nLegId = data.getInt(1);
+        }
+        return nLegId;
+    }
+
+    public int getLastMjesao(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_NAME + " ORDER BY " + COL0 + " DESC LIMIT 1";
+        Cursor data = db.rawQuery(query, null);
+        int nMjesao = -1;
+        while(data.moveToNext()){
+            nMjesao = data.getInt(6);
+        }
+        return nMjesao;
+    }
+
+    public int[] getRezultatLegs(int legId){
+        int[][] zbroj = {};
+        int [] rez = {};
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COL1 + " = " + legId;
+        Cursor data = db.rawQuery(query, null);
+        while(data.moveToNext()){
+            zbroj[data.getInt(0)][0] += data.getInt(2) + data.getInt(4);
+            zbroj[data.getInt(0)][1] += data.getInt(3) + data.getInt(5);
+        }
+        for (int[] i: zbroj) {
+            if(i[0] > i[1]){
+                rez[0] += 1;
+            }
+            else{
+                rez[1] += 1;
+            }
+        }
+        return rez;
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.example.belablok.adapteri;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.belablok.R;
+import com.example.belablok.baze.DatabaseUpisi;
 import com.example.belablok.klase.Leg;
 
 import java.util.List;
@@ -25,12 +27,16 @@ public class recAdapterLegs extends RecyclerView.Adapter<recAdapterLegs.MyViewHo
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView textViewGameId;
         public TextView textViewRbr;
+        public TextView textViewRezMi;
+        public TextView textViewRezVi;
         OnLegListener onLegListener;
 
         public MyViewHolder(View v, OnLegListener onLegListener) {
             super(v);
             textViewGameId = v.findViewById(R.id.tv_game_id);
             textViewRbr = v.findViewById(R.id.tv_rbr);
+            textViewRezMi = v.findViewById(R.id.tv_rezultat_mi);
+            textViewRezVi = v.findViewById(R.id.tv_rezultat_vi);
             this.onLegListener = onLegListener;
 
             v.setOnClickListener(this);
@@ -66,6 +72,8 @@ public class recAdapterLegs extends RecyclerView.Adapter<recAdapterLegs.MyViewHo
     public void onBindViewHolder(@NonNull recAdapterLegs.MyViewHolder holder, int position) {
         String sPosition = Integer.toString(position + 1);
         holder.textViewRbr.setText(sPosition);
+        holder.textViewRezMi.setText("1");
+        holder.textViewRezVi.setText("0");
         /*int nBodoviMi = games.get(position).nBodoviMi;
         int nZvanjaMi = games.get(position).nZvanjaMi;
         int nBodoviVi = games.get(position).nBodoviVi;

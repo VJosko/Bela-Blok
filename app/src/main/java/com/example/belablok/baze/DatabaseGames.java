@@ -23,6 +23,8 @@ public class DatabaseGames extends SQLiteOpenHelper {
     private static final String COL2 = "igrac_2";
     private static final String COL3 = "igrac_3";
     private static final String COL4 = "igrac_4";
+    private static final String COL5 = "pobjede_mi";
+    private static final String COL6 = "pobjede_vi";
 
 
     public DatabaseGames(@Nullable Context context) {
@@ -32,7 +34,7 @@ public class DatabaseGames extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COL1 +" TEXT, " + COL2 +" TEXT, " + COL3 + " TEXT, " + COL4 + " TEXT)";
+                COL1 +" TEXT, " + COL2 +" TEXT, " + COL3 + " TEXT, " + COL4 + " TEXT, " + COL5 + " INT, " + COL6 + " INT)";
         db.execSQL(createTable);
     }
 
@@ -49,6 +51,8 @@ public class DatabaseGames extends SQLiteOpenHelper {
         contentValues.put(COL2, game.sIgrac2);
         contentValues.put(COL3, game.sIgrac3);
         contentValues.put(COL4, game.sIgrac4);
+        contentValues.put(COL5, game.nPobjedeMi);
+        contentValues.put(COL6, game.nPobjedeVi);
 
         long result = db.insert(TABLE_NAME, null, contentValues);
     }
@@ -60,7 +64,7 @@ public class DatabaseGames extends SQLiteOpenHelper {
         Cursor data = db.rawQuery(query, null);
         while(data.moveToNext()){
             Game game = new Game(data.getString(1),data.getString(2),
-                    data.getString(3),data.getString(4));
+                    data.getString(3),data.getString(4),data.getInt(5),data.getInt(6));
             games.add(game);
         }
         return games;
@@ -90,5 +94,19 @@ public class DatabaseGames extends SQLiteOpenHelper {
             igraci.add(data.getString(4));
         }
         return igraci;
+    }
+
+    public void updateRezultat(int id, boolean pobjednik){
+        SQLiteDatabase db = this.getWritableDatabase();
+        if(pobjednik) {
+            String query = "UPDATE " + TABLE_NAME + " SET " + COL5 + " = (" + COL5 + " + " + 1 +
+                    ") WHERE ID = " + id;
+            db.execSQL(query);
+        }
+        else {
+            String query = "UPDATE " + TABLE_NAME + " SET " + COL6 + " = (" + COL6 + " + " + 1 +
+                    ") WHERE ID = " + id;
+            db.execSQL(query);
+        }
     }
 }

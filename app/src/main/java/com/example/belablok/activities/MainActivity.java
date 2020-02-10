@@ -12,22 +12,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.belablok.R;
-import com.example.belablok.UpisStorage;
 import com.example.belablok.baze.DatabaseGames;
 import com.example.belablok.baze.DatabaseLegs;
 import com.example.belablok.baze.DatabaseUpisi;
+import com.example.belablok.dialog.DialogPobjeda;
+import com.example.belablok.klase.Leg;
 import com.example.belablok.klase.Upis;
 import com.example.belablok.adapteri.recAdapterRezultati;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements recAdapterRezultati.OnUpisListener{
+public class MainActivity extends AppCompatActivity implements recAdapterRezultati.OnUpisListener, DialogPobjeda.gumb {
 
     private TextView oTvDijeli;
     private TextView oTvMiRezultat;
     private TextView oTvViRezultat;
     private ImageView oImgNatrag;
+    private ImageView imgPostavke;
     private Button oBtnNoviUpis;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -41,6 +43,14 @@ public class MainActivity extends AppCompatActivity implements recAdapterRezulta
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        imgPostavke = findViewById(R.id.img_postavke);
+        imgPostavke.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, PostavkeActivity.class));
+            }
+        });
 
         oImgNatrag = findViewById(R.id.img_natrag);
         oBtnNoviUpis = findViewById(R.id.btn_novi_upis);
@@ -58,14 +68,6 @@ public class MainActivity extends AppCompatActivity implements recAdapterRezulta
                 startActivity(new Intent(MainActivity.this, UpisBodovaActivity.class));
             }
         });
-
-        //------------Recycler-view------------------
-        recyclerView = findViewById(R.id.recycler_rezultati);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-
-        mAdapter = new recAdapterRezultati(mDatabaseUpisi.getData(mDataBaseLegs.getLastId()), this);
-        recyclerView.setAdapter(mAdapter);
 
         //-----------------Dijeli--------------------
         oTvDijeli = findViewById(R.id.tv_dijeli);
@@ -85,10 +87,48 @@ public class MainActivity extends AppCompatActivity implements recAdapterRezulta
 
         oTvMiRezultat.setText(Integer.toString(nMi));
         oTvViRezultat.setText(Integer.toString(nVi));
+
+        if(mDataBaseLegs.isLegGotov(mDataBaseLegs.getLastId()) && nVi < nMi){
+            mDatabaseGames.updateRezultat(mDatabaseGames.getLastId(), true);
+            Leg leg = new Leg(mDatabaseGames.getLastId(), mDataBaseLegs.getLastRbr() + 1, nMi,nVi,0,100,0);
+            mDataBaseLegs.addData(leg);
+            oTvMiRezultat.setText("0");
+            oTvViRezultat.setText("0");
+            DialogPobjeda dialogPobjeda = new DialogPobjeda();
+            Bundle bundle = new Bundle();
+            bundle.putString("Text", "Mi smo pobjedili!");
+            dialogPobjeda.setArguments(bundle);
+            dialogPobjeda.show(getSupportFragmentManager(), "DialogPobjeda");
+        }
+        else if(mDataBaseLegs.isLegGotov(mDataBaseLegs.getLastId()) && nMi < nVi){
+            mDatabaseGames.updateRezultat(mDatabaseGames.getLastId(), false);
+            Leg leg = new Leg(mDatabaseGames.getLastId(), mDataBaseLegs.getLastRbr() + 1, nMi, nVi,0,100,0);
+            mDataBaseLegs.addData(leg);
+            oTvMiRezultat.setText("0");
+            oTvViRezultat.setText("0");
+            DialogPobjeda dialogPobjeda = new DialogPobjeda();
+            Bundle bundle = new Bundle();
+            bundle.putString("Text", "Vi ste pobjedili!");
+            dialogPobjeda.setArguments(bundle);
+            dialogPobjeda.show(getSupportFragmentManager(), "DialogPobjeda");
+        }
+
+        //------------Recycler-view------------------
+        recyclerView = findViewById(R.id.recycler_rezultati);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        mAdapter = new recAdapterRezultati(mDatabaseUpisi.getData(mDataBaseLegs.getLastId()), this);
+        recyclerView.setAdapter(mAdapter);
     }
 
     @Override
     public void onUpisClick(int position){
         startActivity(new Intent(MainActivity.this, UpisBodovaActivity.class));
+    }
+
+    @Override
+    public void sendOdabir(boolean odabir) {
+
     }
 }

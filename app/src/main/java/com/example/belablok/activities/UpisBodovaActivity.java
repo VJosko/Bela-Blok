@@ -3,7 +3,9 @@ package com.example.belablok.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -18,6 +20,9 @@ import com.example.belablok.baze.DatabaseUpisi;
 import com.example.belablok.klase.Upis;
 
 public class UpisBodovaActivity extends AppCompatActivity {
+
+    private SharedPreferences mPreferences;
+    private SharedPreferences.Editor mEditor;
 
     private Button oBtnNoviUpis;
     private EditText oBodoviMi;
@@ -37,6 +42,9 @@ public class UpisBodovaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upis_bodova);
+
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mEditor = mPreferences.edit();
 
         oBtnNoviUpis = findViewById(R.id.btn_upisi);
         oBodoviMi = findViewById(R.id.text_bodovi_mi);
@@ -139,7 +147,24 @@ public class UpisBodovaActivity extends AppCompatActivity {
                 } catch (NumberFormatException ex){
                     nZvanjaVi = 0;
                 }
-                Upis upis =new Upis(mDatabaseLegs.getLastId(), nBodoviMi, nBodoviVi, nZvanjaMi, nZvanjaVi);
+                int nMjesa = 0;
+                if(mDatabaseLegs.getLastId() == mDatabaseUpisi.getLastLegId()){
+                    nMjesa = mDatabaseUpisi.getLastMjesao() + 1;
+                    if(nMjesa == 4){
+                        nMjesa = 0;
+                    }
+                }
+                //dupli boovi ako ne predu malu
+                /*String pDuplo = mPreferences.getString("duplo", "0");
+                String bDuplo = mDatabaseLegs.getLastLegDuplo();
+                if(pDuplo != bDuplo){
+                    mDatabaseLegs.updateDuplo(mDatabaseLegs.getLastId(), pDuplo);
+                }*/
+
+                //rezultat
+                mDatabaseLegs.updateRezultate(mDatabaseLegs.getLastId(), nBodoviMi + nZvanjaMi, nBodoviVi + nZvanjaVi );
+
+                Upis upis =new Upis(mDatabaseLegs.getLastId(), nBodoviMi, nBodoviVi, nZvanjaMi, nZvanjaVi, nMjesa);
                 //UpisStorage.getInstance().addUpis(upis);
                 mDatabaseUpisi.addData(upis);
                 startActivity(new Intent(UpisBodovaActivity.this, MainActivity.class));

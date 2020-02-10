@@ -18,21 +18,20 @@ public class recAdapterGames extends RecyclerView.Adapter<recAdapterGames.MyView
     List<Game> games;
     private OnGameListener mOnGameListener;
 
-    //private List<Upis> upisi = UpisStorage.getInstance().readUpise();
     private List<Object> holderi;
     private String title = "Upisi";
 
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView textViewRbr;
-        public TextView textViewBodoviMi;
-        public TextView textViewBodoviVi;
+        public TextView textViewPobjedeMi;
+        public TextView textViewPobjedeVi;
         OnGameListener onGameListener;
 
         public MyViewHolder(View v, OnGameListener onGameListener) {
             super(v);
             textViewRbr = v.findViewById(R.id.tv_rbr);
-            textViewBodoviMi = v.findViewById(R.id.tv_bodovi_mi);
-            textViewBodoviVi = v.findViewById(R.id.tv_bodovi_vi);
+            textViewPobjedeMi = v.findViewById(R.id.tv_pobjede_mi);
+            textViewPobjedeVi = v.findViewById(R.id.tv_pobjede_vi);
             this.onGameListener = onGameListener;
 
             v.setOnClickListener(this);

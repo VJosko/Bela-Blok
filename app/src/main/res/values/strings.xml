@@ -3,4 +3,6 @@
     <string name="mi">MI</string>
     <string name="vi">VI</string>
     <string name="dvotocka">:</string>
+
+    <string name="intent_message">intent_message</string>
 </resources>
