@@ -5,7 +5,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -23,8 +26,15 @@ import com.example.belablok.adapteri.recAdapterRezultati;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements recAdapterRezultati.OnUpisListener, DialogPobjeda.gumb {
+public class RezultatActivity extends AppCompatActivity implements recAdapterRezultati.OnUpisListener, DialogPobjeda.Gumb {
 
+    private static final String TAG = "RezultatActivity";
+
+    private SharedPreferences mPreferences;
+    private SharedPreferences.Editor mEditor;
+
+    private TextView tvLegsMi;
+    private TextView tvLegsVi;
     private TextView oTvDijeli;
     private TextView oTvMiRezultat;
     private TextView oTvViRezultat;
@@ -39,16 +49,21 @@ public class MainActivity extends AppCompatActivity implements recAdapterRezulta
     DatabaseUpisi mDatabaseUpisi = new DatabaseUpisi(this);
     DatabaseLegs mDataBaseLegs = new DatabaseLegs(this);
 
+    private ArrayList<Upis> rezulati;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_rezultat);
+
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mEditor = mPreferences.edit();
 
         imgPostavke = findViewById(R.id.img_postavke);
         imgPostavke.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, PostavkeActivity.class));
+                startActivity(new Intent(RezultatActivity.this, PostavkeActivity.class));
             }
         });
 
@@ -58,23 +73,48 @@ public class MainActivity extends AppCompatActivity implements recAdapterRezulta
         oImgNatrag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, menuActivity.class));
+                startActivity(new Intent(RezultatActivity.this, menuActivity.class));
             }
         });
 
         oBtnNoviUpis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, UpisBodovaActivity.class));
+                startActivity(new Intent(RezultatActivity.this, UpisBodovaActivity.class));
             }
         });
 
         //-----------------Dijeli--------------------
-        oTvDijeli = findViewById(R.id.tv_dijeli);
-        ArrayList<String> igraci = mDatabaseGames.getCurrentPlayers();
-        oTvDijeli.setText(igraci.get(0));
+        Dijeli();
 
         //------------------Rezultat-----------------
+        Rezultati();
+
+        //------------Recycler-view------------------
+        rezulati = mDatabaseUpisi.getData(mDataBaseLegs.getLastId());
+
+        recyclerView = findViewById(R.id.recycler_rezultati);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        mAdapter = new recAdapterRezultati(rezulati, this);
+        recyclerView.setAdapter(mAdapter);
+    }
+
+    public void Dijeli(){
+        oTvDijeli = findViewById(R.id.tv_dijeli);
+        ArrayList<String> igraci = mDatabaseGames.getCurrentPlayers();
+        int nMjesa = 0;
+        if(mDataBaseLegs.getLastId() == mDatabaseUpisi.getLastLegId()){
+            nMjesa = mDatabaseUpisi.getLastMjesao() + 1;
+            if(nMjesa == 4){
+                nMjesa = 0;
+            }
+        }
+        oTvDijeli.setText(igraci.get(nMjesa));
+    }
+
+    public void Rezultati(){
         List<Upis> upisi = mDatabaseUpisi.getData(mDataBaseLegs.getLastId());
         int nMi = 0;
         int nVi = 0;
@@ -89,8 +129,10 @@ public class MainActivity extends AppCompatActivity implements recAdapterRezulta
         oTvViRezultat.setText(Integer.toString(nVi));
 
         if(mDataBaseLegs.isLegGotov(mDataBaseLegs.getLastId()) && nVi < nMi){
-            mDatabaseGames.updateRezultat(mDatabaseGames.getLastId(), true);
-            Leg leg = new Leg(mDatabaseGames.getLastId(), mDataBaseLegs.getLastRbr() + 1, nMi,nVi,0,100,0);
+            mDatabaseGames.updateRezultat(mDatabaseGames.getLastId(), true, Integer.parseInt(mDataBaseLegs.getLastLegDuplo()));
+            int nDupli = Integer.parseInt(mPreferences.getString("duplo","0"));
+            int nBodovi = Integer.parseInt(mPreferences.getString("bodovi","1001"));
+            Leg leg = new Leg(mDatabaseGames.getLastId(), mDataBaseLegs.getLastRbr() + 1, 0, 0, nDupli, nBodovi,0);
             mDataBaseLegs.addData(leg);
             oTvMiRezultat.setText("0");
             oTvViRezultat.setText("0");
@@ -101,8 +143,10 @@ public class MainActivity extends AppCompatActivity implements recAdapterRezulta
             dialogPobjeda.show(getSupportFragmentManager(), "DialogPobjeda");
         }
         else if(mDataBaseLegs.isLegGotov(mDataBaseLegs.getLastId()) && nMi < nVi){
-            mDatabaseGames.updateRezultat(mDatabaseGames.getLastId(), false);
-            Leg leg = new Leg(mDatabaseGames.getLastId(), mDataBaseLegs.getLastRbr() + 1, nMi, nVi,0,100,0);
+            mDatabaseGames.updateRezultat(mDatabaseGames.getLastId(), false, Integer.parseInt(mDataBaseLegs.getLastLegDuplo()));
+            int nDupli = Integer.parseInt(mPreferences.getString("duplo","0"));
+            int nBodovi = Integer.parseInt(mPreferences.getString("bodovi","1001"));
+            Leg leg = new Leg(mDatabaseGames.getLastId(), mDataBaseLegs.getLastRbr() + 1, 0, 0, nDupli, nBodovi,0);
             mDataBaseLegs.addData(leg);
             oTvMiRezultat.setText("0");
             oTvViRezultat.setText("0");
@@ -113,22 +157,52 @@ public class MainActivity extends AppCompatActivity implements recAdapterRezulta
             dialogPobjeda.show(getSupportFragmentManager(), "DialogPobjeda");
         }
 
-        //------------Recycler-view------------------
-        recyclerView = findViewById(R.id.recycler_rezultati);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-
-        mAdapter = new recAdapterRezultati(mDatabaseUpisi.getData(mDataBaseLegs.getLastId()), this);
-        recyclerView.setAdapter(mAdapter);
+        tvLegsMi = findViewById(R.id.tv_legs_mi);
+        tvLegsVi = findViewById(R.id.tv_legs_vi);
+        int rez[] = mDatabaseGames.getRezultat(mDatabaseGames.getLastId());
+        tvLegsMi.setText(Integer.toString(rez[0]));
+        tvLegsVi.setText(Integer.toString(rez[1]));
     }
 
     @Override
     public void onUpisClick(int position){
-        startActivity(new Intent(MainActivity.this, UpisBodovaActivity.class));
+        startActivity(new Intent(RezultatActivity.this, UpisBodovaActivity.class));
+    }
+
+    @Override
+    public void onIzbrisiClick(int position) {
+        Upis upis = mDatabaseUpisi.DeleteUpis(position);
+        mDataBaseLegs.updateRezultate(mDataBaseLegs.getLastId(),-(upis.nBodoviMi + upis.nZvanjaMi),-(upis.nBodoviVi + upis.nZvanjaVi));
+        rezulati.remove(position);
+        mAdapter.notifyItemRemoved(position);
+        Dijeli();
+        Rezultati();
     }
 
     @Override
     public void sendOdabir(boolean odabir) {
-
+        if(odabir) {
+            mDataBaseLegs.deleteLeg(mDataBaseLegs.getLastId());
+            startActivity(new Intent(RezultatActivity.this, menuActivity.class));
+        }
+        else
+        {
+        }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

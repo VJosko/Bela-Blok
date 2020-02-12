@@ -3,17 +3,13 @@ package com.example.belablok.adapteri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.belablok.R;
-import com.example.belablok.UpisStorage;
-import com.example.belablok.activities.MainActivity;
-import com.example.belablok.baze.DatabaseLegs;
-import com.example.belablok.baze.DatabaseUpisi;
-import com.example.belablok.klase.Leg;
 import com.example.belablok.klase.Upis;
 
 import java.util.List;
@@ -23,7 +19,6 @@ public class recAdapterRezultati extends RecyclerView.Adapter<recAdapterRezultat
     List<Upis> upisi;
     private OnUpisListener mOnUpisListener;
 
-    //private List<Upis> upisi = UpisStorage.getInstance().readUpise();
     private List<Object> holderi;
     private String title = "Upisi";
 
@@ -31,16 +26,24 @@ public class recAdapterRezultati extends RecyclerView.Adapter<recAdapterRezultat
         public TextView textViewRbr;
         public TextView textViewBodoviMi;
         public TextView textViewBodoviVi;
+        public Button btnIzbrisi;
         OnUpisListener onUpisListener;
 
-        public MyViewHolder(View v, OnUpisListener onUpisListener) {
+        public MyViewHolder(View v, final OnUpisListener onUpisListener) {
             super(v);
             textViewRbr = v.findViewById(R.id.tv_rbr);
             textViewBodoviMi = v.findViewById(R.id.tv_bodovi_mi);
             textViewBodoviVi = v.findViewById(R.id.tv_bodovi_vi);
+            btnIzbrisi = v.findViewById(R.id.btn_izbrisi);
             this.onUpisListener = onUpisListener;
 
             v.setOnClickListener(this);
+            btnIzbrisi.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onUpisListener.onIzbrisiClick(getAdapterPosition());
+                }
+            });
         }
 
         @Override
@@ -52,6 +55,7 @@ public class recAdapterRezultati extends RecyclerView.Adapter<recAdapterRezultat
 
     public interface OnUpisListener{
         void onUpisClick(int position);
+        void onIzbrisiClick(int position);
     }
 
 

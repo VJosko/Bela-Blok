@@ -56,7 +56,7 @@ public class menuActivity extends AppCompatActivity implements DialogIgraci.Dalj
                 mDatabaseGames.addData(game);
                 Leg leg = new Leg(mDatabaseGames.getLastId(), 0);
                 mDatabaseLegs.addData(leg);
-                startActivity(new Intent(menuActivity.this, MainActivity.class));*/
+                startActivity(new Intent(menuActivity.this, RezultatActivity.class));*/
             }
         });
 
@@ -64,7 +64,9 @@ public class menuActivity extends AppCompatActivity implements DialogIgraci.Dalj
         oBtnNastavi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(menuActivity.this, MainActivity.class));
+                if(mDatabaseLegs.getData().size() > 0 && !mDatabaseLegs.isLegGotov(mDatabaseLegs.getLastId())){
+                    startActivity(new Intent(menuActivity.this, RezultatActivity.class));
+                }
             }
         });
 
@@ -82,8 +84,9 @@ public class menuActivity extends AppCompatActivity implements DialogIgraci.Dalj
         Game game = new Game(sJa, sDesni, sSuigrac, sLjevi,0,0);
         mDatabaseGames.addData(game);
         int duplo = Integer.parseInt(mPreferences.getString("duplo", "0"));
-        Leg leg = new Leg(mDatabaseGames.getLastId(),0,0,0, duplo,1000,3);
+        int bodoviZaP = Integer.parseInt(mPreferences.getString("bodovi", "1001"));
+        Leg leg = new Leg(mDatabaseGames.getLastId(),0,0,0, duplo, bodoviZaP,3);
         mDatabaseLegs.addData(leg);
-        startActivity(new Intent(menuActivity.this, MainActivity.class));
+        startActivity(new Intent(menuActivity.this, RezultatActivity.class));
     }
 }

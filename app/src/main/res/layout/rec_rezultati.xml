@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:keepScreenOn="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -42,20 +43,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
-            app:layout_constraintEnd_toStartOf="@id/img_izbrisi"
+            app:layout_constraintEnd_toStartOf="@id/btn_izbrisi"
             app:layout_constraintStart_toEndOf="@+id/tv_bodovi_mi"
             app:layout_constraintTop_toTopOf="parent"
             android:textSize="40sp"/>
 
 
-        <ImageView
-            android:id="@+id/img_izbrisi"
+        <Button
+            android:id="@+id/btn_izbrisi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/trash"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:text="X"
+            android:textColor="#dd5555"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="13dp"
-            android:layout_marginEnd="16dp"/>
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

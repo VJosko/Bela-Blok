@@ -4,19 +4,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.UpisBodovaActivity">
+    tools:context=".activities.UpisBodovaActivity"
+    android:keepScreenOn="true">
+
+    <LinearLayout
+        android:id="@+id/lin_rezultat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="horizontal"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp">
+
+        <TextView
+            android:id="@+id/tv_zbrojeni_rezultat_mi"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="0"/>
+        <TextView
+            android:id="@+id/tv_zbrojeni_rezultat_vi"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="0"/>
+
+    </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/con_bodovi"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/layout_upis_bg">
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/layout_upis_bg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lin_rezultat">
 
         <TextView
             android:id="@+id/tv_bodovi"
@@ -24,7 +53,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Bodovi"
+            android:text="@string/bodovi"
             android:textSize="30sp"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="16dp"
@@ -42,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="MI:"
+                android:text="@string/miD"
                 android:textSize="20sp"/>
 
 
@@ -61,7 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="VI:"
+                android:text="@string/viD"
                 android:textSize="20sp"/>
 
             <EditText
@@ -95,7 +124,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Zvanja"
+            android:text="@string/zvanja"
             android:textSize="30sp"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="16dp"
@@ -113,7 +142,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="MI:"
+                android:text="@string/miD"
                 android:textSize="20sp"/>
 
             <EditText
@@ -131,7 +160,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="VI:"
+                android:text="@string/viD"
                 android:textSize="20sp"/>
 
             <EditText
@@ -156,8 +185,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
-        android:text="upisi"
-        android:textSize="25dp"
+        android:text="@string/upisi"
+        android:textSize="25sp"
         android:background="@drawable/btn_upisi_bg"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

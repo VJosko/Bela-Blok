@@ -24,8 +24,8 @@
         android:layout_marginTop="16dp"/>
 
 
-    <TextView
-        android:id="@+id/bodovi"
+    <Button
+        android:id="@+id/btn_bodovi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Bodovi za pobjedu"
@@ -33,13 +33,14 @@
         app:layout_constraintTop_toBottomOf="@id/duplo"
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"/>
-    <CheckBox
-        android:id="@+id/cb_bodovi"
+    <TextView
+        android:id="@+id/tv_bodovi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/bodovi"
-        app:layout_constraintBottom_toBottomOf="@id/bodovi"
-        android:layout_marginTop="16dp"/>
+        app:layout_constraintStart_toEndOf="@id/btn_bodovi"
+        app:layout_constraintBottom_toBottomOf="@id/btn_bodovi"
+        android:layout_marginTop="16dp"
+        android:text="1001"/>
 
 
     <TextView
@@ -48,7 +49,7 @@
         android:layout_height="wrap_content"
         android:text="Ne gasi ekran"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bodovi"
+        app:layout_constraintTop_toBottomOf="@id/btn_bodovi"
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"/>
     <CheckBox

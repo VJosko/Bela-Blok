@@ -164,4 +164,23 @@ public class DatabaseLegs extends SQLiteOpenHelper{
                 ") WHERE ID = " + id;
         db.execSQL(query);
     }
+
+    public void updateBodoveZaP(int id, int nBodovi){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_NAME + " SET " + COL6 + " = " + nBodovi +
+                " WHERE ID = " + id;
+        db.execSQL(query);
+    }
+
+    public void updateZadnjiMjesao(int id, int nMjesao){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_NAME + " SET " + COL7 + " = " + nMjesao +
+                " WHERE ID = " + id;
+        db.execSQL(query);
+    }
+    public void deleteLeg(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + TABLE_NAME + " WHERE " + COL0 + " = " + id;
+        db.execSQL(query);
+    }
 }

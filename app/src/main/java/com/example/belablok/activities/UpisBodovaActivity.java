@@ -11,10 +11,9 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.example.belablok.R;
-import com.example.belablok.UpisStorage;
 import com.example.belablok.baze.DatabaseLegs;
 import com.example.belablok.baze.DatabaseUpisi;
 import com.example.belablok.klase.Upis;
@@ -24,6 +23,8 @@ public class UpisBodovaActivity extends AppCompatActivity {
     private SharedPreferences mPreferences;
     private SharedPreferences.Editor mEditor;
 
+    private TextView tvZbrojeniRezultatMi;
+    private TextView tvZbrojeniRezultatVi;
     private Button oBtnNoviUpis;
     private EditText oBodoviMi;
     private EditText oBodoviVi;
@@ -33,6 +34,8 @@ public class UpisBodovaActivity extends AppCompatActivity {
     private int nBodoviVi;
     private int nZvanjaMi;
     private int nZvanjaVi;
+    private int nZbrojMi;
+    private int nZbrojVi;
 
     DatabaseUpisi mDatabaseUpisi = new DatabaseUpisi(this);
     DatabaseLegs mDatabaseLegs = new DatabaseLegs(this);
@@ -46,6 +49,8 @@ public class UpisBodovaActivity extends AppCompatActivity {
         mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEditor = mPreferences.edit();
 
+        tvZbrojeniRezultatMi = findViewById(R.id.tv_zbrojeni_rezultat_mi);
+        tvZbrojeniRezultatVi = findViewById(R.id.tv_zbrojeni_rezultat_vi);
         oBtnNoviUpis = findViewById(R.id.btn_upisi);
         oBodoviMi = findViewById(R.id.text_bodovi_mi);
         oBodoviVi = findViewById(R.id.text_bodovi_vi);
@@ -60,6 +65,7 @@ public class UpisBodovaActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Zbroj();
                 try {
                     nBodoviMi = Integer.parseInt(oBodoviMi.getText().toString());
                 }
@@ -96,6 +102,7 @@ public class UpisBodovaActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Zbroj();
                 try {
                     nBodoviVi = Integer.parseInt(oBodoviVi.getText().toString());
                 }
@@ -116,6 +123,40 @@ public class UpisBodovaActivity extends AppCompatActivity {
                 if(nBodoviMi != nBodoviMi1) {
                     oBodoviMi.setText(Integer.toString(nBodoviMi));
                 }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        oZvanjaMi.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Zbroj();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        oZvanjaVi.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Zbroj();
             }
 
             @Override
@@ -154,21 +195,46 @@ public class UpisBodovaActivity extends AppCompatActivity {
                         nMjesa = 0;
                     }
                 }
-                //dupli boovi ako ne predu malu
-                /*String pDuplo = mPreferences.getString("duplo", "0");
-                String bDuplo = mDatabaseLegs.getLastLegDuplo();
-                if(pDuplo != bDuplo){
-                    mDatabaseLegs.updateDuplo(mDatabaseLegs.getLastId(), pDuplo);
-                }*/
 
                 //rezultat
                 mDatabaseLegs.updateRezultate(mDatabaseLegs.getLastId(), nBodoviMi + nZvanjaMi, nBodoviVi + nZvanjaVi );
+                mDatabaseLegs.updateZadnjiMjesao(mDatabaseLegs.getLastId(), nMjesa);
 
-                Upis upis =new Upis(mDatabaseLegs.getLastId(), nBodoviMi, nBodoviVi, nZvanjaMi, nZvanjaVi, nMjesa);
+                Upis upis =new Upis(mDatabaseLegs.getLastId(), mDatabaseUpisi.getNewRbr(mDatabaseLegs.getLastId()), nBodoviMi, nBodoviVi, nZvanjaMi, nZvanjaVi, nMjesa);
                 //UpisStorage.getInstance().addUpis(upis);
                 mDatabaseUpisi.addData(upis);
-                startActivity(new Intent(UpisBodovaActivity.this, MainActivity.class));
+                startActivity(new Intent(UpisBodovaActivity.this, RezultatActivity.class));
             }
         });
+    }
+
+    void Zbroj(){
+        try {
+            nBodoviMi = Integer.parseInt(oBodoviMi.getText().toString());
+        }
+        catch (NumberFormatException ex){
+            nBodoviMi = 0;
+        }
+        try {
+            nZvanjaMi = Integer.parseInt(oZvanjaMi.getText().toString());
+        } catch (NumberFormatException ex){
+            nZvanjaMi = 0;
+        }
+        nZbrojMi = nBodoviMi + nZvanjaMi;
+        tvZbrojeniRezultatMi.setText(Integer.toString(nZbrojMi));
+
+        try {
+            nBodoviVi = Integer.parseInt(oBodoviVi.getText().toString());
+        }
+        catch (NumberFormatException ex){
+            nBodoviVi = 0;
+        }
+        try {
+            nZvanjaVi = Integer.parseInt(oZvanjaVi.getText().toString());
+        } catch (NumberFormatException ex){
+            nZvanjaVi = 0;
+        }
+        nZbrojVi = nBodoviVi + nZvanjaVi;
+        tvZbrojeniRezultatVi.setText(Integer.toString(nZbrojVi));
     }
 }

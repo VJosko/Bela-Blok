@@ -13,14 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.belablok.R;
-import com.example.belablok.activities.MainActivity;
 import com.example.belablok.activities.PovijestActivity;
-import com.example.belablok.adapteri.recAdapterGames;
 import com.example.belablok.adapteri.recAdapterLegs;
-import com.example.belablok.adapteri.recAdapterRezultati;
-import com.example.belablok.baze.DatabaseGames;
 import com.example.belablok.baze.DatabaseLegs;
-import com.example.belablok.baze.DatabaseUpisi;
 import com.example.belablok.interfaces.IPovijestActivity;
 
 public class FragmentLegs extends Fragment implements recAdapterLegs.OnLegListener{

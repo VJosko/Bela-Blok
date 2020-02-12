@@ -96,15 +96,28 @@ public class DatabaseGames extends SQLiteOpenHelper {
         return igraci;
     }
 
-    public void updateRezultat(int id, boolean pobjednik){
+    public int[] getRezultat(int id){
+        int[] rez = {0,0};
         SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COL0 + " = " + id;
+        Cursor data = db.rawQuery(query, null);
+        while(data.moveToNext()){
+            rez[0] = data.getInt(5);
+            rez[1] = data.getInt(6);
+        }
+        return rez;
+    }
+
+    public void updateRezultat(int id, boolean pobjednik, int nDuplo){
+        SQLiteDatabase db = this.getWritableDatabase();
+        int nBodovi = 1 + nDuplo;
         if(pobjednik) {
-            String query = "UPDATE " + TABLE_NAME + " SET " + COL5 + " = (" + COL5 + " + " + 1 +
+            String query = "UPDATE " + TABLE_NAME + " SET " + COL5 + " = (" + COL5 + " + " + nBodovi +
                     ") WHERE ID = " + id;
             db.execSQL(query);
         }
         else {
-            String query = "UPDATE " + TABLE_NAME + " SET " + COL6 + " = (" + COL6 + " + " + 1 +
+            String query = "UPDATE " + TABLE_NAME + " SET " + COL6 + " = (" + COL6 + " + " + nBodovi +
                     ") WHERE ID = " + id;
             db.execSQL(query);
         }

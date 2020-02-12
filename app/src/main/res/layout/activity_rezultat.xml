@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MainActivity">
+    tools:context=".activities.RezultatActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -55,17 +55,28 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/tv_legs_mi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/tv_mi_rezultat"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="1"/>
+
+    <TextView
         android:id="@+id/tv_mi_rezultat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/rezultat"
         android:text=""
         android:textSize="40sp"
         app:layout_constraintEnd_toStartOf="@id/text_mi"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_legs_mi"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <TextView
@@ -113,13 +124,24 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="64dp"
+        android:layout_marginEnd="32dp"
         android:background="@drawable/rezultat"
         android:text=""
         android:textSize="40sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tv_legs_vi"
         app:layout_constraintStart_toEndOf="@id/text_vi"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <TextView
+        android:id="@+id/tv_legs_vi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_vi_rezultat"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="2"/>
 
     <View
         android:id="@+id/crta"
