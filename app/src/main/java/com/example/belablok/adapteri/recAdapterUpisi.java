@@ -59,7 +59,7 @@ public class recAdapterUpisi extends RecyclerView.Adapter<recAdapterUpisi.MyView
     @NonNull
     @Override
     public recAdapterUpisi.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rec_rezultati, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rec_upisi, parent, false);
         MyViewHolder vh = new MyViewHolder(v, mOnUpisListener);
         return vh;
     }

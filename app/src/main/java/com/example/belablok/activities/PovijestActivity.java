@@ -7,6 +7,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.example.belablok.R;
 import com.example.belablok.adapteri.pagerAdapterPovijest;
@@ -17,8 +18,7 @@ import com.example.belablok.interfaces.IPovijestActivity;
 
 public class PovijestActivity extends AppCompatActivity implements IPovijestActivity{
 
-    //private pagerAdapterPovijest mPagerAdapterPovijest;
-    //private ViewPager mViewPager;
+    private ImageView imgNatrag;
 
 
     @Override
@@ -27,6 +27,20 @@ public class PovijestActivity extends AppCompatActivity implements IPovijestActi
         setContentView(R.layout.activity_povijest);
 
         init();
+
+        imgNatrag = findViewById(R.id.img_natrag);
+        imgNatrag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentGames test = (FragmentGames) getSupportFragmentManager().findFragmentByTag("games");
+                if(test != null && test.isVisible()){
+                    finish();
+                }
+                else {
+                    getSupportFragmentManager().popBackStack();
+                }
+            }
+        });
     }
 
     private void init(){

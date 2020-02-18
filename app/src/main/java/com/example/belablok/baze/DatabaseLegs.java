@@ -117,15 +117,15 @@ public class DatabaseLegs extends SQLiteOpenHelper{
         return id;
     }
 
-    public String getLastLegDuplo(){
+    public int getLastLegDuplo(){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_NAME + " ORDER BY " + COL0 + " DESC LIMIT 1";
         Cursor data = db.rawQuery(query, null);
-        String sDuplo = "0";
+        int nDuplo = 0;
         while(data.moveToNext()){
-            sDuplo = data.getString(5);
+            nDuplo = Integer.parseInt(data.getString(5));
         }
-        return sDuplo;
+        return nDuplo;
     }
 
     public boolean isLegGotov(int id){

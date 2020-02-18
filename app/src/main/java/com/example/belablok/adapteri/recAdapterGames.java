@@ -67,14 +67,8 @@ public class recAdapterGames extends RecyclerView.Adapter<recAdapterGames.MyView
     public void onBindViewHolder(@NonNull recAdapterGames.MyViewHolder holder, int position) {
         String sPosition = Integer.toString(position + 1);
         holder.textViewRbr.setText(sPosition);
-        /*int nBodoviMi = games.get(position).nBodoviMi;
-        int nZvanjaMi = games.get(position).nZvanjaMi;
-        int nBodoviVi = games.get(position).nBodoviVi;
-        int nZvanjaVi = games.get(position).nZvanjaVi;
-        String sBodoviMi = Integer.toString(nBodoviMi + nZvanjaMi);
-        String sBodoviVi = Integer.toString(nBodoviVi + nZvanjaVi);
-        holder.textViewBodoviMi.setText(sBodoviMi);
-        holder.textViewBodoviVi.setText(sBodoviVi);*/
+        holder.textViewPobjedeMi.setText(Integer.toString(games.get(position).nPobjedeMi));
+        holder.textViewPobjedeVi.setText(Integer.toString(games.get(position).nPobjedeVi));
     }
 
     @Override

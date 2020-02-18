@@ -73,14 +73,18 @@ public class RezultatActivity extends AppCompatActivity implements recAdapterRez
         oImgNatrag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RezultatActivity.this, menuActivity.class));
+                Intent intent = new Intent(RezultatActivity.this, menuActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
 
         oBtnNoviUpis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RezultatActivity.this, UpisBodovaActivity.class));
+                Intent intent = new Intent(RezultatActivity.this, UpisBodovaActivity.class);
+                intent.putExtra("uredi", "-1");
+                startActivity(intent);
             }
         });
 
@@ -129,7 +133,12 @@ public class RezultatActivity extends AppCompatActivity implements recAdapterRez
         oTvViRezultat.setText(Integer.toString(nVi));
 
         if(mDataBaseLegs.isLegGotov(mDataBaseLegs.getLastId()) && nVi < nMi){
-            mDatabaseGames.updateRezultat(mDatabaseGames.getLastId(), true, Integer.parseInt(mDataBaseLegs.getLastLegDuplo()));
+            int isDuplo = 0;
+            int bodoviZaP = Integer.parseInt(mPreferences.getString("bodovi","1001"));
+            if(mDataBaseLegs.getLastLegDuplo() == 1 && nVi * 2 < bodoviZaP){
+                isDuplo = 1;
+            }
+            mDatabaseGames.updateRezultat(mDatabaseGames.getLastId(), true, isDuplo);
             int nDupli = Integer.parseInt(mPreferences.getString("duplo","0"));
             int nBodovi = Integer.parseInt(mPreferences.getString("bodovi","1001"));
             Leg leg = new Leg(mDatabaseGames.getLastId(), mDataBaseLegs.getLastRbr() + 1, 0, 0, nDupli, nBodovi,0);
@@ -143,7 +152,12 @@ public class RezultatActivity extends AppCompatActivity implements recAdapterRez
             dialogPobjeda.show(getSupportFragmentManager(), "DialogPobjeda");
         }
         else if(mDataBaseLegs.isLegGotov(mDataBaseLegs.getLastId()) && nMi < nVi){
-            mDatabaseGames.updateRezultat(mDatabaseGames.getLastId(), false, Integer.parseInt(mDataBaseLegs.getLastLegDuplo()));
+            int isDuplo = 0;
+            int bodoviZaP = Integer.parseInt(mPreferences.getString("bodovi","1001"));
+            if(mDataBaseLegs.getLastLegDuplo() == 1 && nMi * 2 < bodoviZaP){
+                isDuplo = 1;
+            }
+            mDatabaseGames.updateRezultat(mDatabaseGames.getLastId(), false, isDuplo);
             int nDupli = Integer.parseInt(mPreferences.getString("duplo","0"));
             int nBodovi = Integer.parseInt(mPreferences.getString("bodovi","1001"));
             Leg leg = new Leg(mDatabaseGames.getLastId(), mDataBaseLegs.getLastRbr() + 1, 0, 0, nDupli, nBodovi,0);
@@ -166,7 +180,9 @@ public class RezultatActivity extends AppCompatActivity implements recAdapterRez
 
     @Override
     public void onUpisClick(int position){
-        startActivity(new Intent(RezultatActivity.this, UpisBodovaActivity.class));
+        Intent intent = new Intent(RezultatActivity.this, UpisBodovaActivity.class);
+        intent.putExtra("uredi", Integer.toString(position));
+        startActivity(intent);
     }
 
     @Override

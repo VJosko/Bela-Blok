@@ -52,11 +52,6 @@ public class menuActivity extends AppCompatActivity implements DialogIgraci.Dalj
             public void onClick(View v) {
                 DialogIgraci dialogIgraci = new DialogIgraci();
                 dialogIgraci.show(getSupportFragmentManager(), "DialogIgraci");
-                /*Game game = new Game("ja", "desni", "suigrac", "ljevi");
-                mDatabaseGames.addData(game);
-                Leg leg = new Leg(mDatabaseGames.getLastId(), 0);
-                mDatabaseLegs.addData(leg);
-                startActivity(new Intent(menuActivity.this, RezultatActivity.class));*/
             }
         });
 

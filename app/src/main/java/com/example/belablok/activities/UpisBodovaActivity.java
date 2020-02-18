@@ -36,6 +36,7 @@ public class UpisBodovaActivity extends AppCompatActivity {
     private int nZvanjaVi;
     private int nZbrojMi;
     private int nZbrojVi;
+    private int uredi;
 
     DatabaseUpisi mDatabaseUpisi = new DatabaseUpisi(this);
     DatabaseLegs mDatabaseLegs = new DatabaseLegs(this);
@@ -56,6 +57,26 @@ public class UpisBodovaActivity extends AppCompatActivity {
         oBodoviVi = findViewById(R.id.text_bodovi_vi);
         oZvanjaMi = findViewById(R.id.text_zvanja_mi);
         oZvanjaVi = findViewById(R.id.text_zvanja_vi);
+
+        uredi = Integer.parseInt(getIntent().getStringExtra("uredi"));
+
+        if(uredi > -1){
+            int[] bodovi = mDatabaseUpisi.getBodove(uredi);
+            tvZbrojeniRezultatMi.setText(Integer.toString(bodovi[0] + bodovi[2]));
+            tvZbrojeniRezultatVi.setText(Integer.toString(bodovi[1] + bodovi[3]));
+            if(bodovi[0] != 0){
+                oBodoviMi.setText(Integer.toString(bodovi[0]));
+            }
+            if(bodovi[1] != 0){
+                oBodoviVi.setText(Integer.toString(bodovi[1]));
+            }
+            if(bodovi[2] != 0){
+                oZvanjaMi.setText(Integer.toString(bodovi[2]));
+            }
+            if(bodovi[3] != 0){
+                oZvanjaVi.setText(Integer.toString(bodovi[3]));
+            }
+        }
 
         oBodoviMi.addTextChangedListener(new TextWatcher() {
             @Override
@@ -168,44 +189,84 @@ public class UpisBodovaActivity extends AppCompatActivity {
         oBtnNoviUpis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    nBodoviMi = Integer.parseInt(oBodoviMi.getText().toString());
-                } catch (NumberFormatException ex){
-                    nBodoviMi = 0;
+                if(uredi == -1){
+                    NoviUpis();
                 }
-                try {
-                    nBodoviVi = Integer.parseInt(oBodoviVi.getText().toString());
-                } catch (NumberFormatException ex){
-                    nBodoviVi = 0;
+                else{
+                    UrediUpis();
                 }
-                try {
-                    nZvanjaMi = Integer.parseInt(oZvanjaMi.getText().toString());
-                } catch (NumberFormatException ex){
-                    nZvanjaMi = 0;
-                }
-                try {
-                    nZvanjaVi = Integer.parseInt(oZvanjaVi.getText().toString());
-                } catch (NumberFormatException ex){
-                    nZvanjaVi = 0;
-                }
-                int nMjesa = 0;
-                if(mDatabaseLegs.getLastId() == mDatabaseUpisi.getLastLegId()){
-                    nMjesa = mDatabaseUpisi.getLastMjesao() + 1;
-                    if(nMjesa == 4){
-                        nMjesa = 0;
-                    }
-                }
-
-                //rezultat
-                mDatabaseLegs.updateRezultate(mDatabaseLegs.getLastId(), nBodoviMi + nZvanjaMi, nBodoviVi + nZvanjaVi );
-                mDatabaseLegs.updateZadnjiMjesao(mDatabaseLegs.getLastId(), nMjesa);
-
-                Upis upis =new Upis(mDatabaseLegs.getLastId(), mDatabaseUpisi.getNewRbr(mDatabaseLegs.getLastId()), nBodoviMi, nBodoviVi, nZvanjaMi, nZvanjaVi, nMjesa);
-                //UpisStorage.getInstance().addUpis(upis);
-                mDatabaseUpisi.addData(upis);
-                startActivity(new Intent(UpisBodovaActivity.this, RezultatActivity.class));
             }
         });
+    }
+
+    void UrediUpis(){
+        try {
+            nBodoviMi = Integer.parseInt(oBodoviMi.getText().toString());
+        } catch (NumberFormatException ex){
+            nBodoviMi = 0;
+        }
+        try {
+            nBodoviVi = Integer.parseInt(oBodoviVi.getText().toString());
+        } catch (NumberFormatException ex){
+            nBodoviVi = 0;
+        }
+        try {
+            nZvanjaMi = Integer.parseInt(oZvanjaMi.getText().toString());
+        } catch (NumberFormatException ex){
+            nZvanjaMi = 0;
+        }
+        try {
+            nZvanjaVi = Integer.parseInt(oZvanjaVi.getText().toString());
+        } catch (NumberFormatException ex){
+            nZvanjaVi = 0;
+        }
+        int[] bodovi = mDatabaseUpisi.getBodove(uredi);
+        mDatabaseLegs.updateRezultate(mDatabaseLegs.getLastId(),-(bodovi[0] + bodovi[2]), -(bodovi[1] + bodovi[3]));
+        mDatabaseLegs.updateRezultate(mDatabaseLegs.getLastId(), nBodoviMi + nZvanjaMi, nBodoviVi + nZvanjaVi);
+        mDatabaseUpisi.updateUpis(uredi, nBodoviMi, nBodoviVi, nZvanjaMi, nZvanjaVi);
+        startActivity(new Intent(UpisBodovaActivity.this, RezultatActivity.class));
+    }
+
+    void NoviUpis()
+    {
+        try {
+            nBodoviMi = Integer.parseInt(oBodoviMi.getText().toString());
+        } catch (NumberFormatException ex){
+            nBodoviMi = 0;
+        }
+        try {
+            nBodoviVi = Integer.parseInt(oBodoviVi.getText().toString());
+        } catch (NumberFormatException ex){
+            nBodoviVi = 0;
+        }
+        try {
+            nZvanjaMi = Integer.parseInt(oZvanjaMi.getText().toString());
+        } catch (NumberFormatException ex){
+            nZvanjaMi = 0;
+        }
+        try {
+            nZvanjaVi = Integer.parseInt(oZvanjaVi.getText().toString());
+        } catch (NumberFormatException ex){
+            nZvanjaVi = 0;
+        }
+        int nMjesa = 0;
+        if(mDatabaseLegs.getLastId() == mDatabaseUpisi.getLastLegId()){
+            nMjesa = mDatabaseUpisi.getLastMjesao() + 1;
+            if(nMjesa == 4){
+                nMjesa = 0;
+            }
+        }
+
+        //rezultat
+        mDatabaseLegs.updateRezultate(mDatabaseLegs.getLastId(), nBodoviMi + nZvanjaMi, nBodoviVi + nZvanjaVi );
+        mDatabaseLegs.updateZadnjiMjesao(mDatabaseLegs.getLastId(), nMjesa);
+
+        Upis upis =new Upis(mDatabaseLegs.getLastId(), mDatabaseUpisi.getNewRbr(mDatabaseLegs.getLastId()), nBodoviMi, nBodoviVi, nZvanjaMi, nZvanjaVi, nMjesa);
+        //UpisStorage.getInstance().addUpis(upis);
+        mDatabaseUpisi.addData(upis);
+        Intent intent = new Intent(UpisBodovaActivity.this, RezultatActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     void Zbroj(){

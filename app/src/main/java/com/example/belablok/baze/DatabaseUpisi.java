@@ -175,6 +175,22 @@ public class DatabaseUpisi extends SQLiteOpenHelper {
         }
     }
 
+    public int[] getBodove(int rbr){
+        int[] bodovi = {0,0,0,0};
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " +
+                COL1 + " = " + getLastLegId() + " AND " + COL2 + " = " + rbr;
+        Cursor data = db.rawQuery(query, null);
+        while(data.moveToNext()){
+            bodovi[0] = data.getInt(3);
+            bodovi[1] = data.getInt(4);
+            bodovi[2] = data.getInt(5);
+            bodovi[3] = data.getInt(6);
+        }
+
+        return bodovi;
+    }
+
     public Upis DeleteUpis(int rbr){
         SQLiteDatabase db = this.getWritableDatabase();
         Upis upis = new Upis(0,0,0,0,0,0,0);
@@ -200,6 +216,14 @@ public class DatabaseUpisi extends SQLiteOpenHelper {
         db.execSQL(query);
 
         return upis;
+    }
+
+    public void updateUpis(int rbr, int bodoviMi, int bodoviVi, int zvanjaMi, int zvanjaVi){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_NAME + " SET " + COL3 + " = " + bodoviMi + ", " + COL4 + " = " + bodoviVi +
+                ", " + COL5 + " = " + zvanjaMi + ", " + COL6 + " = " + zvanjaVi + " WHERE " +
+                COL1 + " = " + getLastLegId() + " AND " + COL2 + " = " + rbr;
+        db.execSQL(query);
     }
 
 }
