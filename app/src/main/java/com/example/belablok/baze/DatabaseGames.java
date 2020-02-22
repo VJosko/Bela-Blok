@@ -25,6 +25,7 @@ public class DatabaseGames extends SQLiteOpenHelper {
     private static final String COL4 = "igrac_4";
     private static final String COL5 = "pobjede_mi";
     private static final String COL6 = "pobjede_vi";
+    private static final String COL7 = "datum";
 
 
     public DatabaseGames(@Nullable Context context) {
@@ -34,7 +35,7 @@ public class DatabaseGames extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COL1 +" TEXT, " + COL2 +" TEXT, " + COL3 + " TEXT, " + COL4 + " TEXT, " + COL5 + " INT, " + COL6 + " INT)";
+                COL1 +" TEXT, " + COL2 +" TEXT, " + COL3 + " TEXT, " + COL4 + " TEXT, " + COL5 + " INT, " + COL6 + " INT, " + COL7 + " TEXT)";
         db.execSQL(createTable);
     }
 
@@ -53,6 +54,8 @@ public class DatabaseGames extends SQLiteOpenHelper {
         contentValues.put(COL4, game.sIgrac4);
         contentValues.put(COL5, game.nPobjedeMi);
         contentValues.put(COL6, game.nPobjedeVi);
+        contentValues.put(COL7, game.sDatum);
+
 
         long result = db.insert(TABLE_NAME, null, contentValues);
     }
@@ -64,7 +67,8 @@ public class DatabaseGames extends SQLiteOpenHelper {
         Cursor data = db.rawQuery(query, null);
         while(data.moveToNext()){
             Game game = new Game(data.getString(1),data.getString(2),
-                    data.getString(3),data.getString(4),data.getInt(5),data.getInt(6));
+                    data.getString(3),data.getString(4),data.getInt(5),
+                    data.getInt(6), data.getString(7));
             games.add(game);
         }
         return games;

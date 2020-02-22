@@ -3,6 +3,7 @@ package com.example.belablok.adapteri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,7 +14,7 @@ import com.example.belablok.klase.Game;
 
 import java.util.List;
 
-public class recAdapterGames extends RecyclerView.Adapter<recAdapterGames.MyViewHolder> {
+public class recAdapterGames extends RecyclerView.Adapter<recAdapterGames.MyViewHolder>{
 
     List<Game> games;
     private OnGameListener mOnGameListener;
@@ -21,17 +22,20 @@ public class recAdapterGames extends RecyclerView.Adapter<recAdapterGames.MyView
     private List<Object> holderi;
     private String title = "Upisi";
 
+
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView textViewRbr;
+        public ImageView imageViewSlika;
         public TextView textViewPobjedeMi;
         public TextView textViewPobjedeVi;
+        public TextView textViewDatum;
         OnGameListener onGameListener;
 
         public MyViewHolder(View v, OnGameListener onGameListener) {
             super(v);
-            textViewRbr = v.findViewById(R.id.tv_rbr);
+            imageViewSlika = v.findViewById(R.id.iv_slika);
             textViewPobjedeMi = v.findViewById(R.id.tv_pobjede_mi);
             textViewPobjedeVi = v.findViewById(R.id.tv_pobjede_vi);
+            textViewDatum = v.findViewById(R.id.tv_datum);
             this.onGameListener = onGameListener;
 
             v.setOnClickListener(this);
@@ -65,10 +69,18 @@ public class recAdapterGames extends RecyclerView.Adapter<recAdapterGames.MyView
 
     @Override
     public void onBindViewHolder(@NonNull recAdapterGames.MyViewHolder holder, int position) {
-        String sPosition = Integer.toString(position + 1);
-        holder.textViewRbr.setText(sPosition);
+        if(games.get(position).nPobjedeMi > games.get(position).nPobjedeVi){
+            holder.imageViewSlika.setImageResource(R.drawable.ic_pobjeda);
+        }
+        else if(games.get(position).nPobjedeMi < games.get(position).nPobjedeVi){
+            holder.imageViewSlika.setImageResource(R.drawable.ic_gubitak);
+        }
+        else{
+            holder.imageViewSlika.setImageResource(R.drawable.ic_izjednaceno);
+        }
         holder.textViewPobjedeMi.setText(Integer.toString(games.get(position).nPobjedeMi));
         holder.textViewPobjedeVi.setText(Integer.toString(games.get(position).nPobjedeVi));
+        holder.textViewDatum.setText(games.get(position).sDatum);
     }
 
     @Override

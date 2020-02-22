@@ -11,6 +11,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -38,8 +39,7 @@ public class RezultatActivity extends AppCompatActivity implements recAdapterRez
     private TextView oTvDijeli;
     private TextView oTvMiRezultat;
     private TextView oTvViRezultat;
-    private ImageView oImgNatrag;
-    private ImageView imgPostavke;
+    private ImageButton oIbtnNatrag, oIbtnPostavke;
     private Button oBtnNoviUpis;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -59,18 +59,18 @@ public class RezultatActivity extends AppCompatActivity implements recAdapterRez
         mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEditor = mPreferences.edit();
 
-        imgPostavke = findViewById(R.id.img_postavke);
-        imgPostavke.setOnClickListener(new View.OnClickListener() {
+        oIbtnPostavke = findViewById(R.id.ibtn_postavke);
+        oIbtnPostavke.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(RezultatActivity.this, PostavkeActivity.class));
             }
         });
 
-        oImgNatrag = findViewById(R.id.img_natrag);
+        oIbtnNatrag = findViewById(R.id.ibtn_natrag);
         oBtnNoviUpis = findViewById(R.id.btn_novi_upis);
 
-        oImgNatrag.setOnClickListener(new View.OnClickListener() {
+        oIbtnNatrag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(RezultatActivity.this, menuActivity.class);

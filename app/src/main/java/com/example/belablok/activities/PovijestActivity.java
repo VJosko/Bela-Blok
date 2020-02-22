@@ -7,6 +7,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.belablok.R;
@@ -18,7 +19,7 @@ import com.example.belablok.interfaces.IPovijestActivity;
 
 public class PovijestActivity extends AppCompatActivity implements IPovijestActivity{
 
-    private ImageView imgNatrag;
+    private ImageButton ibtn_natrag;
 
 
     @Override
@@ -28,8 +29,8 @@ public class PovijestActivity extends AppCompatActivity implements IPovijestActi
 
         init();
 
-        imgNatrag = findViewById(R.id.img_natrag);
-        imgNatrag.setOnClickListener(new View.OnClickListener() {
+        ibtn_natrag = findViewById(R.id.ibtn_natrag);
+        ibtn_natrag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentGames test = (FragmentGames) getSupportFragmentManager().findFragmentByTag("games");

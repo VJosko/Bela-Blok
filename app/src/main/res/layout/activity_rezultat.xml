@@ -17,139 +17,149 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/img_natrag"
+    <ImageButton
+        android:id="@+id/ibtn_natrag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
         android:src="@drawable/ic_arrow"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_dijeli_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/img_natrag"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/tv_dijeli"
-        android:text="Dijeli:"/>
+        android:background="@color/colorPrimary"/>
 
-    <TextView
-        android:id="@+id/tv_dijeli"
+
+    <ImageButton
+        android:id="@+id/ibtn_postavke"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/tv_dijeli_txt"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/img_postavke"/>
-
-    <ImageView
-        android:id="@+id/img_postavke"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
         android:src="@drawable/ic_postavke"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/colorPrimary"/>
 
-    <TextView
-        android:id="@+id/tv_legs_mi"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/lin_dijeli"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@id/tv_mi_rezultat"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="1"/>
+        app:layout_constraintBottom_toBottomOf="@id/toolbar"
+        android:layout_marginBottom="4dp">
 
-    <TextView
-        android:id="@+id/tv_mi_rezultat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/rezultat"
-        android:text=""
-        android:textSize="40sp"
-        app:layout_constraintEnd_toStartOf="@id/text_mi"
-        app:layout_constraintStart_toEndOf="@+id/tv_legs_mi"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        <TextView
+            android:id="@+id/tv_dijeli_txt"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Dijeli:"
+            android:textAlignment="textEnd"
+            android:textSize="14sp"/>
 
-    <TextView
-        android:id="@+id/text_mi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/mi"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toStartOf="@id/text_dvotocka"
-        app:layout_constraintStart_toEndOf="@id/tv_mi_rezultat"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="0.05"
+            android:layout_height="0dp"/>
 
-    <TextView
-        android:id="@+id/text_dvotocka"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/dvotocka"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toStartOf="@id/text_vi"
-        app:layout_constraintStart_toEndOf="@id/text_mi"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        <TextView
+            android:id="@+id/tv_dijeli"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textAlignment="textStart"
+            android:textSize="14sp"/>
 
-    <TextView
-        android:id="@+id/text_vi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/vi"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toStartOf="@id/tv_vi_rezultat"
-        app:layout_constraintStart_toEndOf="@id/text_dvotocka"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_vi_rezultat"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/lin_prikaz"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/rezultat"
-        android:text=""
-        android:textSize="40sp"
-        app:layout_constraintEnd_toStartOf="@+id/tv_legs_vi"
-        app:layout_constraintStart_toEndOf="@id/text_vi"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/lin_dijeli"
+        android:layout_marginTop="10dp">
 
-    <TextView
-        android:id="@+id/tv_legs_vi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tv_vi_rezultat"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="2"/>
+        <TextView
+            android:id="@+id/tv_legs_mi"
+            android:layout_width="0dp"
+            android:layout_weight="0.3"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/tv_mi_rezultat"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="40sp"
+            android:textAlignment="center"
+            android:background="@drawable/rezultat"
+            android:layout_marginTop="3dp"/>
+
+        <TextView
+            android:id="@+id/text_mi"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:text="@string/mi"
+            android:textSize="30sp"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/text_dvotocka"
+            android:layout_width="0dp"
+            android:layout_weight="0.1"
+            android:layout_height="wrap_content"
+            android:text="@string/dvotocka"
+            android:textSize="30sp"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/text_vi"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:text="@string/vi"
+            android:textSize="30sp"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/tv_vi_rezultat"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="40sp"
+            android:textAlignment="center"
+            android:background="@drawable/rezultat"
+            android:layout_marginTop="3dp"/>
+
+        <TextView
+            android:id="@+id/tv_legs_vi"
+            android:layout_width="0dp"
+            android:layout_weight="0.3"
+            android:layout_height="wrap_content"
+            android:text="2"
+            android:textAlignment="center"/>
+
+    </LinearLayout>
 
     <View
         android:id="@+id/crta"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:background="#222222"
-        app:layout_constraintTop_toBottomOf="@id/text_dvotocka" />
+        app:layout_constraintTop_toBottomOf="@id/lin_prikaz" />
 
     <LinearLayout
         android:layout_width="0dp"

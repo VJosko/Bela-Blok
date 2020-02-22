@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,14 +26,14 @@ public class recAdapterLegs extends RecyclerView.Adapter<recAdapterLegs.MyViewHo
     private String title = "legs";
 
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView textViewRbr;
+        public ImageView imageViewSlika;
         public TextView textViewRezMi;
         public TextView textViewRezVi;
         OnLegListener onLegListener;
 
         public MyViewHolder(View v, OnLegListener onLegListener) {
             super(v);
-            textViewRbr = v.findViewById(R.id.tv_rbr);
+            imageViewSlika = v.findViewById(R.id.iv_slika);
             textViewRezMi = v.findViewById(R.id.tv_rezultat_mi);
             textViewRezVi = v.findViewById(R.id.tv_rezultat_vi);
             this.onLegListener = onLegListener;
@@ -68,18 +69,17 @@ public class recAdapterLegs extends RecyclerView.Adapter<recAdapterLegs.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull recAdapterLegs.MyViewHolder holder, int position) {
-        String sPosition = Integer.toString(position + 1);
-        holder.textViewRbr.setText(sPosition);
+        if(legs.get(position).nBodoviMi > legs.get(position).nBodoviVi){
+            holder.imageViewSlika.setImageResource(R.drawable.ic_pobjeda);
+        }
+        else if(legs.get(position).nBodoviMi < legs.get(position).nBodoviVi){
+            holder.imageViewSlika.setImageResource(R.drawable.ic_gubitak);
+        }
+        else{
+            holder.imageViewSlika.setImageResource(R.drawable.ic_izjednaceno);
+        }
         holder.textViewRezMi.setText(Integer.toString(legs.get(position).nBodoviMi));
         holder.textViewRezVi.setText(Integer.toString(legs.get(position).nBodoviVi));
-        /*int nBodoviMi = games.get(position).nBodoviMi;
-        int nZvanjaMi = games.get(position).nZvanjaMi;
-        int nBodoviVi = games.get(position).nBodoviVi;
-        int nZvanjaVi = games.get(position).nZvanjaVi;
-        String sBodoviMi = Integer.toString(nBodoviMi + nZvanjaMi);
-        String sBodoviVi = Integer.toString(nBodoviVi + nZvanjaVi);
-        holder.textViewBodoviMi.setText(sBodoviMi);
-        holder.textViewBodoviVi.setText(sBodoviVi);*/
     }
 
     @Override

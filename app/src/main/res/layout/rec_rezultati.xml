@@ -1,63 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:keepScreenOn="true">
+    android:orientation="vertical"
+    android:keepScreenOn="true"
+    android:layout_marginTop="1dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/layout_upis_bg">
+        android:background="#383838">
 
-        <TextView
-            android:id="@+id/tv_rbr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:textSize="40sp"
-            android:layout_marginStart="16dp"/>
-
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="0dp"/>
 
         <TextView
             android:id="@+id/tv_bodovi_mi"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="TextView"
-            app:layout_constraintEnd_toStartOf="@+id/tv_bodovi_vi"
-            app:layout_constraintStart_toEndOf="@id/tv_rbr"
-            app:layout_constraintTop_toTopOf="parent"
-            android:textSize="40sp"/>
+            android:textSize="40sp"
+            android:textAlignment="center"/>
 
 
         <TextView
             android:id="@+id/tv_bodovi_vi"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="TextView"
-            app:layout_constraintEnd_toStartOf="@id/btn_izbrisi"
-            app:layout_constraintStart_toEndOf="@+id/tv_bodovi_mi"
-            app:layout_constraintTop_toTopOf="parent"
-            android:textSize="40sp"/>
+            android:textSize="40sp"
+            android:textAlignment="center"/>
 
 
         <Button
             android:id="@+id/btn_izbrisi"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="16dp"
             android:text="X"
             android:textColor="#dd5555"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            android:textAlignment="center"/>
+
+    </LinearLayout>
+
+
+    </LinearLayout>

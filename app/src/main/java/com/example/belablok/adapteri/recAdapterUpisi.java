@@ -3,6 +3,7 @@ package com.example.belablok.adapteri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,14 +24,14 @@ public class recAdapterUpisi extends RecyclerView.Adapter<recAdapterUpisi.MyView
     private String title = "Upisi";
 
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView textViewRbr;
+        public ImageView imageViewSlika;
         public TextView textViewBodoviMi;
         public TextView textViewBodoviVi;
         OnUpisListener onUpisListener;
 
         public MyViewHolder(View v, OnUpisListener onUpisListener) {
             super(v);
-            textViewRbr = v.findViewById(R.id.tv_rbr);
+            imageViewSlika = v.findViewById(R.id.iv_slika);
             textViewBodoviMi = v.findViewById(R.id.tv_bodovi_mi);
             textViewBodoviVi = v.findViewById(R.id.tv_bodovi_vi);
             this.onUpisListener = onUpisListener;
@@ -66,8 +67,15 @@ public class recAdapterUpisi extends RecyclerView.Adapter<recAdapterUpisi.MyView
 
     @Override
     public void onBindViewHolder(@NonNull recAdapterUpisi.MyViewHolder holder, int position) {
-        String sPosition = Integer.toString(position + 1);
-        holder.textViewRbr.setText(sPosition);
+        if(upisi.get(position).nBodoviMi + upisi.get(position).nZvanjaMi > upisi.get(position).nBodoviVi + upisi.get(position).nZvanjaVi){
+            holder.imageViewSlika.setImageResource(R.drawable.ic_pobjeda);
+        }
+        else if(upisi.get(position).nBodoviMi + upisi.get(position).nZvanjaMi < upisi.get(position).nBodoviVi + upisi.get(position).nZvanjaVi){
+            holder.imageViewSlika.setImageResource(R.drawable.ic_gubitak);
+        }
+        else{
+            holder.imageViewSlika.setImageResource(R.drawable.ic_izjednaceno);
+        }
         int nBodoviMi = upisi.get(position).nBodoviMi;
         int nZvanjaMi = upisi.get(position).nZvanjaMi;
         int nBodoviVi = upisi.get(position).nBodoviVi;

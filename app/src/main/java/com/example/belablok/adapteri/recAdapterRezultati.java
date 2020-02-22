@@ -23,7 +23,6 @@ public class recAdapterRezultati extends RecyclerView.Adapter<recAdapterRezultat
     private String title = "Upisi";
 
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView textViewRbr;
         public TextView textViewBodoviMi;
         public TextView textViewBodoviVi;
         public Button btnIzbrisi;
@@ -31,7 +30,6 @@ public class recAdapterRezultati extends RecyclerView.Adapter<recAdapterRezultat
 
         public MyViewHolder(View v, final OnUpisListener onUpisListener) {
             super(v);
-            textViewRbr = v.findViewById(R.id.tv_rbr);
             textViewBodoviMi = v.findViewById(R.id.tv_bodovi_mi);
             textViewBodoviVi = v.findViewById(R.id.tv_bodovi_vi);
             btnIzbrisi = v.findViewById(R.id.btn_izbrisi);
@@ -75,8 +73,6 @@ public class recAdapterRezultati extends RecyclerView.Adapter<recAdapterRezultat
 
     @Override
     public void onBindViewHolder(@NonNull recAdapterRezultati.MyViewHolder holder, int position) {
-        String sPosition = Integer.toString(position + 1);
-        holder.textViewRbr.setText(sPosition);
         int nBodoviMi = upisi.get(position).nBodoviMi;
         int nZvanjaMi = upisi.get(position).nZvanjaMi;
         int nBodoviVi = upisi.get(position).nBodoviVi;

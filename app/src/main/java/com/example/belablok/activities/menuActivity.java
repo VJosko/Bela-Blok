@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,7 +18,13 @@ import com.example.belablok.dialog.DialogIgraci;
 import com.example.belablok.klase.Game;
 import com.example.belablok.klase.Leg;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class menuActivity extends AppCompatActivity implements DialogIgraci.Dalje {
+
+    private static final String TAG = "menuActivity";
 
     private SharedPreferences mPreferences;
     private SharedPreferences.Editor mEditor;
@@ -76,7 +83,10 @@ public class menuActivity extends AppCompatActivity implements DialogIgraci.Dalj
 
     @Override
     public void sendInput(String sSuigrac, String sLjevi, String sDesni, String sJa) {
-        Game game = new Game(sJa, sDesni, sSuigrac, sLjevi,0,0);
+        SimpleDateFormat normalniFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+        Calendar calendar = Calendar.getInstance();
+        String datum = normalniFormat.format(calendar.getTime());
+        Game game = new Game(sJa, sDesni, sSuigrac, sLjevi,0,0, datum);
         mDatabaseGames.addData(game);
         int duplo = Integer.parseInt(mPreferences.getString("duplo", "0"));
         int bodoviZaP = Integer.parseInt(mPreferences.getString("bodovi", "1001"));
