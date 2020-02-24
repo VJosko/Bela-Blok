@@ -41,6 +41,7 @@ public class RezultatActivity extends AppCompatActivity implements recAdapterRez
     private TextView oTvViRezultat;
     private ImageButton oIbtnNatrag, oIbtnPostavke;
     private Button oBtnNoviUpis;
+    private ImageButton oBtnIduci;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -88,6 +89,14 @@ public class RezultatActivity extends AppCompatActivity implements recAdapterRez
             }
         });
 
+        oBtnIduci = findViewById(R.id.ibtn_iduci);
+        oBtnIduci.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Iduci();
+            }
+        });
+
         //-----------------Dijeli--------------------
         Dijeli();
 
@@ -103,19 +112,42 @@ public class RezultatActivity extends AppCompatActivity implements recAdapterRez
 
         mAdapter = new recAdapterRezultati(rezulati, this);
         recyclerView.setAdapter(mAdapter);
+        recyclerView.smoothScrollToPosition(rezulati.size());
     }
 
     public void Dijeli(){
         oTvDijeli = findViewById(R.id.tv_dijeli);
         ArrayList<String> igraci = mDatabaseGames.getCurrentPlayers();
-        int nMjesa = 0;
+        int nMjesa;
         if(mDataBaseLegs.getLastId() == mDatabaseUpisi.getLastLegId()){
             nMjesa = mDatabaseUpisi.getLastMjesao() + 1;
             if(nMjesa == 4){
                 nMjesa = 0;
             }
         }
+        else{
+            nMjesa = Integer.parseInt(mPreferences.getString("mjesa", "0"));
+        }
         oTvDijeli.setText(igraci.get(nMjesa));
+    }
+
+    public void Iduci(){
+        ArrayList<String> igraci = mDatabaseGames.getCurrentPlayers();
+        int nMjesa = Integer.parseInt(mPreferences.getString("mjesa", "0")) + 1;
+        if(nMjesa > 3){
+            nMjesa = 0;
+        }
+        String sMjesa = Integer.toString(nMjesa);
+        if(mDataBaseLegs.getLastId() == mDatabaseUpisi.getLastLegId()){
+            mDatabaseUpisi.updateLastMjesao();
+            mEditor.putString("mjesa", sMjesa);
+        }
+        else{
+            mEditor.putString("mjesa", sMjesa);
+        }
+        oTvDijeli = findViewById(R.id.tv_dijeli);
+        oTvDijeli.setText(igraci.get(nMjesa));
+        mEditor.commit();
     }
 
     public void Rezultati(){

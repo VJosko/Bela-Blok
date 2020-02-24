@@ -42,7 +42,9 @@ public class FragmentGames extends Fragment implements recAdapterGames.OnGameLis
 
         //------------Recycler-view------------------
         recyclerView = view.findViewById(R.id.rec_games);
-        layoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
 
         mAdapter = new recAdapterGames(mDatabaseGames.getData(), this);

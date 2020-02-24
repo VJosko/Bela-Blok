@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.belablok.R;
@@ -23,6 +24,7 @@ public class UpisBodovaActivity extends AppCompatActivity {
     private SharedPreferences mPreferences;
     private SharedPreferences.Editor mEditor;
 
+    private ImageButton ibtn_natrag, ibtn_postavke;
     private TextView tvZbrojeniRezultatMi;
     private TextView tvZbrojeniRezultatVi;
     private Button oBtnNoviUpis;
@@ -57,6 +59,24 @@ public class UpisBodovaActivity extends AppCompatActivity {
         oBodoviVi = findViewById(R.id.text_bodovi_vi);
         oZvanjaMi = findViewById(R.id.text_zvanja_mi);
         oZvanjaVi = findViewById(R.id.text_zvanja_vi);
+
+        ibtn_natrag = findViewById(R.id.ibtn_natrag);
+        ibtn_natrag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UpisBodovaActivity.this, RezultatActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+
+        ibtn_postavke = findViewById(R.id.ibtn_postavke);
+        ibtn_postavke.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(UpisBodovaActivity.this, PostavkeActivity.class));
+            }
+        });
 
         uredi = Integer.parseInt(getIntent().getStringExtra("uredi"));
 
@@ -107,6 +127,34 @@ public class UpisBodovaActivity extends AppCompatActivity {
                 if(nBodoviVi != nBodoviVi1) {
                     oBodoviVi.setText(Integer.toString(nBodoviVi));
                 }
+                //vracanje----cursora
+                String nula = "0";
+                int cursor;
+                try {
+                    nula = oBodoviMi.getText().toString();
+                    cursor = Integer.parseInt(nula);
+                }
+                catch (NumberFormatException ex){
+                    nula = "0";
+                    cursor = -1;
+                }
+
+                if(cursor > 100){
+                    oBodoviMi.setSelection(3);
+                }
+                if(cursor > 162){
+                    oBodoviMi.setText("162");
+                }
+                //makivanje----nule
+                if(nula.charAt(0) == '0' && nula.length() > 1){
+                    int duljina = nula.length();
+                    String broj = "";
+                    for(int i = 1; i < duljina; i++){
+                        broj = broj + nula.charAt(i);
+                    }
+                    oBodoviMi.setText(broj);
+                    oBodoviMi.setSelection(duljina - 1);
+                }
             }
 
             @Override
@@ -143,6 +191,34 @@ public class UpisBodovaActivity extends AppCompatActivity {
                 }
                 if(nBodoviMi != nBodoviMi1) {
                     oBodoviMi.setText(Integer.toString(nBodoviMi));
+                }
+                //vracanje----cursora
+                String nula = "0";
+                int cursor;
+                try {
+                    nula = oBodoviVi.getText().toString();
+                    cursor = Integer.parseInt(nula);
+                }
+                catch (NumberFormatException ex){
+                    nula = "0";
+                    cursor = -1;
+                }
+
+                if(cursor > 100){
+                    oBodoviVi.setSelection(3);
+                }
+                if(cursor > 162){
+                    oBodoviVi.setText("162");
+                }
+                //makivanje----nule
+                if(nula.charAt(0) == '0' && nula.length() > 1){
+                    int duljina = nula.length();
+                    String broj = "";
+                    for(int i = 1; i < duljina; i++){
+                        broj = broj + nula.charAt(i);
+                    }
+                    oBodoviVi.setText(broj);
+                    oBodoviVi.setSelection(duljina - 1);
                 }
             }
 
@@ -249,17 +325,28 @@ public class UpisBodovaActivity extends AppCompatActivity {
         } catch (NumberFormatException ex){
             nZvanjaVi = 0;
         }
-        int nMjesa = 0;
+        int nMjesa;
         if(mDatabaseLegs.getLastId() == mDatabaseUpisi.getLastLegId()){
             nMjesa = mDatabaseUpisi.getLastMjesao() + 1;
             if(nMjesa == 4){
                 nMjesa = 0;
             }
         }
+        else{
+            nMjesa = Integer.parseInt(mPreferences.getString("mjesa", "0"));
+        }
 
         //rezultat
         mDatabaseLegs.updateRezultate(mDatabaseLegs.getLastId(), nBodoviMi + nZvanjaMi, nBodoviVi + nZvanjaVi );
         mDatabaseLegs.updateZadnjiMjesao(mDatabaseLegs.getLastId(), nMjesa);
+
+        int Mjesa = Integer.parseInt(mPreferences.getString("mjesa", "0")) + 1;
+        if(Mjesa > 3){
+            Mjesa = 0;
+        }
+        String sMjesa = Integer.toString(Mjesa);
+        mEditor.putString("mjesa", sMjesa);
+        mEditor.commit();
 
         Upis upis =new Upis(mDatabaseLegs.getLastId(), mDatabaseUpisi.getNewRbr(mDatabaseLegs.getLastId()), nBodoviMi, nBodoviVi, nZvanjaMi, nZvanjaVi, nMjesa);
         //UpisStorage.getInstance().addUpis(upis);

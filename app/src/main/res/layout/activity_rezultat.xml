@@ -55,14 +55,19 @@
         app:layout_constraintBottom_toBottomOf="@id/toolbar"
         android:layout_marginBottom="4dp">
 
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="0dp"/>
+
         <TextView
             android:id="@+id/tv_dijeli_txt"
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="0.7"
             android:layout_height="wrap_content"
             android:text="Dijeli:"
             android:textAlignment="textEnd"
-            android:textSize="14sp"/>
+            android:textSize="18sp"/>
 
         <View
             android:layout_width="0dp"
@@ -72,10 +77,23 @@
         <TextView
             android:id="@+id/tv_dijeli"
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="0.7"
             android:layout_height="wrap_content"
             android:textAlignment="textStart"
-            android:textSize="14sp"/>
+            android:textSize="18sp"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textAlignment="textStart">
+            <ImageButton
+                android:id="@+id/ibtn_iduci"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_promjena"
+                android:background="@color/colorPrimary"/>
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -83,7 +101,7 @@
         android:id="@+id/lin_prikaz"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/lin_dijeli"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         android:layout_marginTop="10dp">
 
         <TextView
@@ -92,6 +110,7 @@
             android:layout_weight="0.3"
             android:layout_height="wrap_content"
             android:text="1"
+            android:textSize="18sp"
             android:textAlignment="center"/>
 
         <TextView
@@ -149,6 +168,7 @@
             android:layout_weight="0.3"
             android:layout_height="wrap_content"
             android:text="2"
+            android:textSize="18sp"
             android:textAlignment="center"/>
 
     </LinearLayout>
@@ -167,7 +187,8 @@
         app:layout_constraintTop_toBottomOf="@id/crta"
         app:layout_constraintBottom_toTopOf="@id/btn_novi_upis"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="5dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_rezultati"

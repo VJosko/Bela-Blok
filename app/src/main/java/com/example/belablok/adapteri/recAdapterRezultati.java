@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,18 +26,18 @@ public class recAdapterRezultati extends RecyclerView.Adapter<recAdapterRezultat
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView textViewBodoviMi;
         public TextView textViewBodoviVi;
-        public Button btnIzbrisi;
+        public ImageButton ibtnIzbrisi;
         OnUpisListener onUpisListener;
 
         public MyViewHolder(View v, final OnUpisListener onUpisListener) {
             super(v);
             textViewBodoviMi = v.findViewById(R.id.tv_bodovi_mi);
             textViewBodoviVi = v.findViewById(R.id.tv_bodovi_vi);
-            btnIzbrisi = v.findViewById(R.id.btn_izbrisi);
+            ibtnIzbrisi = v.findViewById(R.id.ibtn_izbrisi);
             this.onUpisListener = onUpisListener;
 
             v.setOnClickListener(this);
-            btnIzbrisi.setOnClickListener(new View.OnClickListener() {
+            ibtnIzbrisi.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     onUpisListener.onIzbrisiClick(getAdapterPosition());

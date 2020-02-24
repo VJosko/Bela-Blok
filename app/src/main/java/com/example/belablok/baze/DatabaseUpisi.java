@@ -226,4 +226,14 @@ public class DatabaseUpisi extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
+    public void updateLastMjesao(){
+        int nMjesa = getLastMjesao() + 1;
+        if(nMjesa > 3){
+            nMjesa = 0;
+        }
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_NAME + " SET " + COL7 + " = " + nMjesa + " WHERE " + COL0 + " = " + getLastUpisId();
+        db.execSQL(query);
+    }
+
 }

@@ -92,6 +92,8 @@ public class menuActivity extends AppCompatActivity implements DialogIgraci.Dalj
         int bodoviZaP = Integer.parseInt(mPreferences.getString("bodovi", "1001"));
         Leg leg = new Leg(mDatabaseGames.getLastId(),0,0,0, duplo, bodoviZaP,3);
         mDatabaseLegs.addData(leg);
+        mEditor.putString("mjesa", "0");
+        mEditor.commit();
         startActivity(new Intent(menuActivity.this, RezultatActivity.class));
     }
 }
