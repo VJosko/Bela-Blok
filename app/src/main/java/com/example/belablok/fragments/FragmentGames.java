@@ -38,6 +38,8 @@ public class FragmentGames extends Fragment implements recAdapterGames.OnGameLis
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_games_layout, container, false);
 
+        mIPovijestActivity.setNaslov("Igre");
+
         DatabaseGames mDatabaseGames = new DatabaseGames(getActivity());
 
         //------------Recycler-view------------------

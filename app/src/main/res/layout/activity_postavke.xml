@@ -1,63 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activities.PostavkeActivity">
 
-    <TextView
-        android:id="@+id/duplo"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Postavke"
+            android:textSize="25sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/toolbar"/>
+
+        <ImageButton
+            android:id="@+id/ibtn_natrag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:src="@drawable/ic_arrow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/colorPrimary"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Dupli bodovi"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
-    <CheckBox
-        android:id="@+id/cb_duplo"
-        android:layout_width="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="5dp">
+
+        <TextView
+            android:id="@+id/tv_bodovi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bodovi za pobjedu: "
+            android:textSize="18dp"/>
+
+        <Button
+            android:id="@+id/btn_bodovi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1001"
+            android:textSize="18dp"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#383838"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/duplo"
-        app:layout_constraintBottom_toBottomOf="@id/duplo"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="16dp">
+
+        <TextView
+            android:id="@+id/duplo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dupli bodovi"
+            android:textSize="18dp"/>
+
+        <CheckBox
+            android:id="@+id/cb_duplo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"/>
+
+    </LinearLayout>
 
 
-    <Button
-        android:id="@+id/btn_bodovi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Bodovi za pobjedu"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/duplo"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
-    <TextView
-        android:id="@+id/tv_bodovi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/btn_bodovi"
-        app:layout_constraintBottom_toBottomOf="@id/btn_bodovi"
-        android:layout_marginTop="16dp"
-        android:text="1001"/>
-
-
-    <TextView
-        android:id="@+id/ekran"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ne gasi ekran"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_bodovi"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
-    <CheckBox
-        android:id="@+id/cb_ekran"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/ekran"
-        app:layout_constraintBottom_toBottomOf="@id/ekran"
-        android:layout_marginTop="16dp"/>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

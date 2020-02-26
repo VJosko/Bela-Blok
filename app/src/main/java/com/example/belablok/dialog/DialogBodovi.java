@@ -1,7 +1,9 @@
 package com.example.belablok.dialog;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +27,9 @@ public class DialogBodovi extends DialogFragment {
 
     private EditText txtBodovi;
     private Button btnPotvrdi, btnNatrag;
+
+    private SharedPreferences mPreferences;
+    private SharedPreferences.Editor mEditor;
 
     @Nullable
     @Override
@@ -56,6 +61,11 @@ public class DialogBodovi extends DialogFragment {
                 getDialog().dismiss();
             }
         });
+
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        mEditor = mPreferences.edit();
+
+        txtBodovi.setHint(mPreferences.getString("bodovi", "1001"));
 
         return view;
     }

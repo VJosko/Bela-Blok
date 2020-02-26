@@ -2,6 +2,7 @@ package com.example.belablok.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -26,9 +28,10 @@ public class PostavkeActivity extends AppCompatActivity implements DialogBodovi.
 
     DatabaseLegs mDatabaseLegs = new DatabaseLegs(this);
 
-    private CheckBox cbDuplo, cbEkran;
+    private CheckBox cbDuplo;
     private Button btnBodovi;
     private TextView tvBodovi;
+    private ImageButton ibtnNatrag;
 
     private SharedPreferences mPreferences;
     private SharedPreferences.Editor mEditor;
@@ -38,10 +41,17 @@ public class PostavkeActivity extends AppCompatActivity implements DialogBodovi.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_postavke);
 
+        ibtnNatrag = findViewById(R.id.ibtn_natrag);
+        ibtnNatrag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         cbDuplo = findViewById(R.id.cb_duplo);
         btnBodovi = findViewById(R.id.btn_bodovi);
         tvBodovi = findViewById(R.id.tv_bodovi);
-        cbEkran = findViewById(R.id.cb_ekran);
 
         mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEditor = mPreferences.edit();
@@ -81,15 +91,11 @@ public class PostavkeActivity extends AppCompatActivity implements DialogBodovi.
     private void checkSharedPreferences(){
         String duplo = mPreferences.getString("duplo", "0");
         String bodovi = mPreferences.getString("bodovi", "1001");
-        String ekran = mPreferences.getString("ekran", "0");
 
         if(duplo.equals("1")){
             cbDuplo.setChecked(true);
         }
-        tvBodovi.setText(bodovi);
-        if(ekran.equals("1")){
-            cbEkran.setChecked(true);
-        }
+        btnBodovi.setText(bodovi);
     }
 
     @Override
@@ -97,7 +103,7 @@ public class PostavkeActivity extends AppCompatActivity implements DialogBodovi.
         mEditor.putString("bodovi", sBodovi);
         mEditor.commit();
         Log.d(TAG, "sendInput: " + mPreferences.getString("bodovi","-1") + "----------------------");
-        tvBodovi.setText(sBodovi);
+        btnBodovi.setText(sBodovi);
         if(!mDatabaseLegs.isLegGotov(mDatabaseLegs.getLastId())){
             mDatabaseLegs.updateBodoveZaP(mDatabaseLegs.getLastId(), Integer.parseInt(sBodovi));
         }

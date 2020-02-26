@@ -202,7 +202,7 @@
         android:id="@+id/btn_novi_upis"
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:background="@drawable/btn_novi_upis"
+        android:background="@drawable/btn_novi_upis_bg"
         android:drawableTop="@drawable/ic_blue_plus"
         android:paddingTop="12dp"
         app:layout_constraintBottom_toBottomOf="parent"

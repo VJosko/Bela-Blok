@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.belablok.R;
 import com.example.belablok.adapteri.pagerAdapterPovijest;
@@ -20,12 +21,15 @@ import com.example.belablok.interfaces.IPovijestActivity;
 public class PovijestActivity extends AppCompatActivity implements IPovijestActivity{
 
     private ImageButton ibtn_natrag;
+    private TextView tvNaslov;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_povijest);
+
+        tvNaslov = findViewById(R.id.tv_naslov);
 
         init();
 
@@ -64,6 +68,11 @@ public class PovijestActivity extends AppCompatActivity implements IPovijestActi
             transaction.addToBackStack(tag);
         }
         transaction.commit();
+    }
+
+    @Override
+    public void setNaslov(String sNaslov) {
+        tvNaslov.setText(sNaslov);
     }
 
     @Override

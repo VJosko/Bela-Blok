@@ -43,6 +43,8 @@ public class FragmentLegs extends Fragment implements recAdapterLegs.OnLegListen
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_legs_layout, container, false);
 
+        mIPovijestActivity.setNaslov("Runde");
+
 
         DatabaseLegs mDatabaseLegs = new DatabaseLegs(getActivity());
 

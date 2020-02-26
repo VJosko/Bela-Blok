@@ -48,6 +48,8 @@ public class FragmentUpisi extends Fragment implements recAdapterUpisi.OnUpisLis
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_upisi_layout, container, false);
 
+        mIPovijestActivity.setNaslov("Upisi");
+
         DatabaseUpisi mDatabaseUpisi = new DatabaseUpisi(getActivity());
 
         //------------Recycler-view------------------

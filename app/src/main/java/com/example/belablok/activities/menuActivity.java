@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.belablok.R;
@@ -32,7 +33,7 @@ public class menuActivity extends AppCompatActivity implements DialogIgraci.Dalj
     private Button oBtnNovaIgra;
     private Button oBtnNastavi;
     private Button oBtnPovijest;
-    private ImageView imgPostavke;
+    private ImageButton ibtnPostavke;
 
     DatabaseGames mDatabaseGames = new DatabaseGames(this);
     DatabaseLegs mDatabaseLegs = new DatabaseLegs(this);
@@ -45,8 +46,8 @@ public class menuActivity extends AppCompatActivity implements DialogIgraci.Dalj
         mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEditor = mPreferences.edit();
 
-        imgPostavke = findViewById(R.id.img_postavke);
-        imgPostavke.setOnClickListener(new View.OnClickListener() {
+        ibtnPostavke = findViewById(R.id.ibtn_postavke);
+        ibtnPostavke.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(menuActivity.this, PostavkeActivity.class));

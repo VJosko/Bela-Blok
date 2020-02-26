@@ -30,6 +30,7 @@ public class DialogIgraci extends DialogFragment {
     private String sDesni = "Desni";
     private String sJa = "Ja";
     private Button btnDalje;
+    private Button btnOdustani;
 
     @Nullable
     @Override
@@ -40,8 +41,16 @@ public class DialogIgraci extends DialogFragment {
         mLjevi = view.findViewById(R.id.text_ljevi);
         mDesni = view.findViewById(R.id.text_desni);
         mJa = view.findViewById(R.id.text_ja);
-        btnDalje = view.findViewById(R.id.btn_dalje);
 
+        btnOdustani = view.findViewById(R.id.btn_odustani);
+        btnOdustani.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDialog().dismiss();
+            }
+        });
+
+        btnDalje = view.findViewById(R.id.btn_dalje);
         btnDalje.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -6,15 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".activities.menuActivity">
 
-    <ImageView
-        android:id="@+id/img_postavke"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageButton
+        android:id="@+id/ibtn_postavke"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
         android:src="@drawable/ic_postavke"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"/>
+        android:background="@color/colorPrimary"/>
 
     <Button
         android:id="@+id/btn_nova_igra"
@@ -22,14 +39,14 @@
         android:layout_height="wrap_content"
         android:text="@string/nova_igra"
         android:textSize="35sp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/btn_nastavi"
         android:layout_marginStart="64dp"
         android:layout_marginEnd="64dp"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/menu_gumb_bg"/>
+        android:layout_marginTop="16dp"
+        android:background="@drawable/menu_gumb"/>
 
     <Button
         android:id="@+id/btn_nastavi"
@@ -43,7 +60,7 @@
         app:layout_constraintBottom_toTopOf="@id/btn_povijest"
         android:layout_marginStart="64dp"
         android:layout_marginEnd="64dp"
-        android:background="@drawable/menu_gumb_bg"/>
+        android:background="@drawable/menu_gumb"/>
 
     <Button
         android:id="@+id/btn_povijest"
@@ -58,6 +75,6 @@
         android:layout_marginStart="64dp"
         android:layout_marginEnd="64dp"
         android:layout_marginBottom="300dp"
-        android:background="@drawable/menu_gumb_bg"/>
+        android:background="@drawable/menu_gumb"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
