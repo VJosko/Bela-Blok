@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -34,6 +36,7 @@ public class menuActivity extends AppCompatActivity implements DialogIgraci.Dalj
     private Button oBtnNastavi;
     private Button oBtnPovijest;
     private ImageButton ibtnPostavke;
+    private String sTema;
 
     DatabaseGames mDatabaseGames = new DatabaseGames(this);
     DatabaseLegs mDatabaseLegs = new DatabaseLegs(this);
@@ -41,10 +44,18 @@ public class menuActivity extends AppCompatActivity implements DialogIgraci.Dalj
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu);
 
         mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEditor = mPreferences.edit();
+
+        sTema = mPreferences.getString("tema", "tamna");
+        if(sTema.equals("tamna")){
+            setTheme(R.style.AppThemeDark);
+        }
+        else if(sTema.equals("svjetla")){
+            setTheme(R.style.AppThemeLight);
+        }
+        setContentView(R.layout.activity_menu);
 
         ibtnPostavke = findViewById(R.id.ibtn_postavke);
         ibtnPostavke.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +91,14 @@ public class menuActivity extends AppCompatActivity implements DialogIgraci.Dalj
                 startActivity(new Intent(menuActivity.this, PovijestActivity.class));
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(sTema != mPreferences.getString("tema", "tamna")){
+            recreate();
+        }
     }
 
     @Override

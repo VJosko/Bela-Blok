@@ -39,6 +39,7 @@ public class UpisBodovaActivity extends AppCompatActivity {
     private int nZbrojMi;
     private int nZbrojVi;
     private int uredi;
+    private String sTema;
 
     DatabaseUpisi mDatabaseUpisi = new DatabaseUpisi(this);
     DatabaseLegs mDatabaseLegs = new DatabaseLegs(this);
@@ -47,10 +48,18 @@ public class UpisBodovaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_upis_bodova);
 
         mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEditor = mPreferences.edit();
+
+        sTema = mPreferences.getString("tema", "tamna");
+        if(sTema.equals("tamna")){
+            setTheme(R.style.AppThemeDark);
+        }
+        else if(sTema.equals("svjetla")){
+            setTheme(R.style.AppThemeLight);
+        }
+        setContentView(R.layout.activity_upis_bodova);
 
         tvZbrojeniRezultatMi = findViewById(R.id.tv_zbrojeni_rezultat_mi);
         tvZbrojeniRezultatVi = findViewById(R.id.tv_zbrojeni_rezultat_vi);
@@ -275,6 +284,14 @@ public class UpisBodovaActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(sTema != mPreferences.getString("tema", "tamna")){
+            recreate();
+        }
+    }
+
     void UrediUpis(){
         try {
             nBodoviMi = Integer.parseInt(oBodoviMi.getText().toString());
@@ -349,7 +366,6 @@ public class UpisBodovaActivity extends AppCompatActivity {
         mEditor.commit();
 
         Upis upis =new Upis(mDatabaseLegs.getLastId(), mDatabaseUpisi.getNewRbr(mDatabaseLegs.getLastId()), nBodoviMi, nBodoviVi, nZvanjaMi, nZvanjaVi, nMjesa);
-        //UpisStorage.getInstance().addUpis(upis);
         mDatabaseUpisi.addData(upis);
         Intent intent = new Intent(UpisBodovaActivity.this, RezultatActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

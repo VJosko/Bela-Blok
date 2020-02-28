@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -20,13 +22,28 @@ import com.example.belablok.interfaces.IPovijestActivity;
 
 public class PovijestActivity extends AppCompatActivity implements IPovijestActivity{
 
+    private SharedPreferences mPreferences;
+    private SharedPreferences.Editor mEditor;
+
     private ImageButton ibtn_natrag;
     private TextView tvNaslov;
+    private String sTema;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mEditor = mPreferences.edit();
+
+        sTema = mPreferences.getString("tema", "tamna");
+        if(sTema.equals("tamna")){
+            setTheme(R.style.AppThemeDark);
+        }
+        else if(sTema.equals("svjetla")){
+            setTheme(R.style.AppThemeLight);
+        }
         setContentView(R.layout.activity_povijest);
 
         tvNaslov = findViewById(R.id.tv_naslov);
@@ -48,6 +65,14 @@ public class PovijestActivity extends AppCompatActivity implements IPovijestActi
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(sTema != mPreferences.getString("tema", "tamna")){
+            recreate();
+        }
+    }
+
     private void init(){
         FragmentGames fragmentGames = new FragmentGames();
         doFragmentTransaction(fragmentGames, "games", false, "");
@@ -55,6 +80,7 @@ public class PovijestActivity extends AppCompatActivity implements IPovijestActi
 
     private void doFragmentTransaction(Fragment fragment, String tag, boolean addToBackStack, String message){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_from_right);
 
         if(!message.equals("")){
             Bundle bundle = new Bundle();

@@ -39,7 +39,7 @@
         android:src="@drawable/ic_arrow"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/colorPrimary"/>
+        android:background="?colorPrimary"/>
 
 
     <LinearLayout

@@ -2,6 +2,7 @@ package com.example.belablok.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,7 +29,7 @@ public class PostavkeActivity extends AppCompatActivity implements DialogBodovi.
 
     DatabaseLegs mDatabaseLegs = new DatabaseLegs(this);
 
-    private CheckBox cbDuplo;
+    private CheckBox cbDuplo, cbTema;
     private Button btnBodovi;
     private TextView tvBodovi;
     private ImageButton ibtnNatrag;
@@ -39,6 +40,17 @@ public class PostavkeActivity extends AppCompatActivity implements DialogBodovi.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mEditor = mPreferences.edit();
+
+        String sTema = mPreferences.getString("tema", "tamna");
+        if(sTema.equals("tamna")){
+            setTheme(R.style.AppThemeDark);
+        }
+        else if(sTema.equals("svjetla")){
+            setTheme(R.style.AppThemeLight);
+        }
         setContentView(R.layout.activity_postavke);
 
         ibtnNatrag = findViewById(R.id.ibtn_natrag);
@@ -52,9 +64,7 @@ public class PostavkeActivity extends AppCompatActivity implements DialogBodovi.
         cbDuplo = findViewById(R.id.cb_duplo);
         btnBodovi = findViewById(R.id.btn_bodovi);
         tvBodovi = findViewById(R.id.tv_bodovi);
-
-        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        mEditor = mPreferences.edit();
+        cbTema = findViewById(R.id.cb_tema);
 
         checkSharedPreferences();
 
@@ -78,6 +88,23 @@ public class PostavkeActivity extends AppCompatActivity implements DialogBodovi.
             }
         });
 
+        //Tema
+        cbTema.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    mEditor.putString("tema", "tamna");
+                    mEditor.commit();
+                    recreate();
+                }
+                else{
+                    mEditor.putString("tema", "svjetla");
+                    mEditor.commit();
+                    recreate();
+                }
+            }
+        });
+
         //Odabir bodova
         btnBodovi.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,11 +118,17 @@ public class PostavkeActivity extends AppCompatActivity implements DialogBodovi.
     private void checkSharedPreferences(){
         String duplo = mPreferences.getString("duplo", "0");
         String bodovi = mPreferences.getString("bodovi", "1001");
+        String tema = mPreferences.getString("tema", "tamna");
 
         if(duplo.equals("1")){
             cbDuplo.setChecked(true);
         }
+
         btnBodovi.setText(bodovi);
+
+        if(tema.equals("tamna")){
+            cbTema.setChecked(true);
+        }
     }
 
     @Override

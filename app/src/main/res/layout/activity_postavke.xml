@@ -45,7 +45,7 @@
             android:src="@drawable/ic_arrow"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/colorPrimary"/>
+            android:background="?colorPrimary"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -81,7 +81,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:layout_marginStart="16dp">
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="5dp">
 
         <TextView
             android:id="@+id/duplo"
@@ -92,6 +93,32 @@
 
         <CheckBox
             android:id="@+id/cb_duplo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#383838"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="16dp">
+
+        <TextView
+            android:id="@+id/tema"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tamna tema"
+            android:textSize="18dp"/>
+
+        <CheckBox
+            android:id="@+id/cb_tema"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18dp"/>

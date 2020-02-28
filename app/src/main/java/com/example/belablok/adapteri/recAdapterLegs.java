@@ -21,7 +21,6 @@ public class recAdapterLegs extends RecyclerView.Adapter<recAdapterLegs.MyViewHo
     List<Leg> legs;
     private OnLegListener mOnLegListener;
 
-    //private List<Upis> upisi = UpisStorage.getInstance().readUpise();
     private List<Object> holderi;
     private String title = "legs";
 

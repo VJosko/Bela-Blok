@@ -19,7 +19,6 @@ public class recAdapterUpisi extends RecyclerView.Adapter<recAdapterUpisi.MyView
     List<Upis> upisi;
     private OnUpisListener mOnUpisListener;
 
-    //private List<Upis> upisi = UpisStorage.getInstance().readUpise();
     private List<Object> holderi;
     private String title = "Upisi";
 

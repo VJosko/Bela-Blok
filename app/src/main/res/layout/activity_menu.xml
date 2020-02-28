@@ -31,7 +31,7 @@
         android:src="@drawable/ic_postavke"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/colorPrimary"/>
+        android:background="?colorPrimary"/>
 
     <Button
         android:id="@+id/btn_nova_igra"

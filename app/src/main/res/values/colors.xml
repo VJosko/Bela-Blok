@@ -3,6 +3,13 @@
     <color name="colorPrimary">#546e7a</color>
     <color name="colorPrimaryDark">#29434e</color>
     <color name="colorAccent">#819ca9</color>
-    <color name="ColorSecondary">#1565c0</color>
-    <color name="ColorSecondaryDark">#003c8f</color>
+    <color name="button">#575757</color>
+    <color name="buttonLight">#606060</color>
+
+    <color name="colorPrimaryL">#c1d5e0</color>
+    <color name="colorPrimaryDarkL">#90a4ae</color>
+    <color name="colorAccentL">#bbdefb</color>
+    <color name="buttonL">#b0bec5</color>
+    <color name="buttonLightL">#808e95</color>
 </resources>
+

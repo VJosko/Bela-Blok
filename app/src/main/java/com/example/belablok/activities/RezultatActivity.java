@@ -45,6 +45,7 @@ public class RezultatActivity extends AppCompatActivity implements recAdapterRez
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
+    private String sTema;
 
     DatabaseGames mDatabaseGames = new DatabaseGames(this);
     DatabaseUpisi mDatabaseUpisi = new DatabaseUpisi(this);
@@ -55,10 +56,18 @@ public class RezultatActivity extends AppCompatActivity implements recAdapterRez
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rezultat);
 
         mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEditor = mPreferences.edit();
+
+        sTema = mPreferences.getString("tema", "tamna");
+        if(sTema.equals("tamna")){
+            setTheme(R.style.AppThemeDark);
+        }
+        else if(sTema.equals("svjetla")){
+            setTheme(R.style.AppThemeLight);
+        }
+        setContentView(R.layout.activity_rezultat);
 
         oIbtnPostavke = findViewById(R.id.ibtn_postavke);
         oIbtnPostavke.setOnClickListener(new View.OnClickListener() {
@@ -113,6 +122,14 @@ public class RezultatActivity extends AppCompatActivity implements recAdapterRez
         mAdapter = new recAdapterRezultati(rezulati, this);
         recyclerView.setAdapter(mAdapter);
         recyclerView.smoothScrollToPosition(rezulati.size());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(sTema != mPreferences.getString("tema", "tamna")){
+            recreate();
+        }
     }
 
     public void Dijeli(){
