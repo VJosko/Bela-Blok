@@ -19,9 +19,6 @@ public class recAdapterGames extends RecyclerView.Adapter<recAdapterGames.MyView
     List<Game> games;
     private OnGameListener mOnGameListener;
 
-    private List<Object> holderi;
-    private String title = "Upisi";
-
 
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ImageView imageViewSlika;

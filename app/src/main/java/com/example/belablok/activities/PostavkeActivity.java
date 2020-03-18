@@ -20,19 +20,25 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.belablok.R;
+import com.example.belablok.baze.DatabaseGames;
 import com.example.belablok.baze.DatabaseLegs;
+import com.example.belablok.baze.DatabaseUpisi;
 import com.example.belablok.dialog.DialogBodovi;
+import com.example.belablok.dialog.DialogBrisanjePovijesti;
 
-public class PostavkeActivity extends AppCompatActivity implements DialogBodovi.OdabirBodova {
+public class PostavkeActivity extends AppCompatActivity implements DialogBodovi.OdabirBodova, DialogBrisanjePovijesti.potvrdaBrisanja {
 
     private static final String TAG = "PostavkeActivity";
 
+    DatabaseGames mDatabaseGames = new DatabaseGames(this);
     DatabaseLegs mDatabaseLegs = new DatabaseLegs(this);
+    DatabaseUpisi mDatabaseUpisi = new DatabaseUpisi(this);
 
     private CheckBox cbDuplo, cbTema;
     private Button btnBodovi;
     private TextView tvBodovi;
     private ImageButton ibtnNatrag;
+    private Button btnObrisi;
 
     private SharedPreferences mPreferences;
     private SharedPreferences.Editor mEditor;
@@ -65,6 +71,7 @@ public class PostavkeActivity extends AppCompatActivity implements DialogBodovi.
         btnBodovi = findViewById(R.id.btn_bodovi);
         tvBodovi = findViewById(R.id.tv_bodovi);
         cbTema = findViewById(R.id.cb_tema);
+        btnObrisi = findViewById(R.id.btn_obrisi_povijest);
 
         checkSharedPreferences();
 
@@ -113,6 +120,15 @@ public class PostavkeActivity extends AppCompatActivity implements DialogBodovi.
                 dialogBodovi.show(getSupportFragmentManager(), "DialogBodovi");
             }
         });
+
+        //Brisanje povijesti
+        btnObrisi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogBrisanjePovijesti dialogBrisanjePovijesti = new DialogBrisanjePovijesti();
+                dialogBrisanjePovijesti.show(getSupportFragmentManager(), "DialogBrisanjePovijesti");
+            }
+        });
     }
 
     private void checkSharedPreferences(){
@@ -140,5 +156,12 @@ public class PostavkeActivity extends AppCompatActivity implements DialogBodovi.
         if(!mDatabaseLegs.isLegGotov(mDatabaseLegs.getLastId())){
             mDatabaseLegs.updateBodoveZaP(mDatabaseLegs.getLastId(), Integer.parseInt(sBodovi));
         }
+    }
+
+    @Override
+    public void sendPotvrdu() {
+        mDatabaseGames.isprazniBazu();
+        mDatabaseLegs.isprazniBazu();
+        mDatabaseUpisi.isprazniBazu();
     }
 }

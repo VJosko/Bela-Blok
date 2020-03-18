@@ -14,7 +14,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Potrebni bodovi za pobjedu: "
+            android:text="@string/potrebniBodovi"
             android:textSize="20sp"
             android:textAlignment="textStart"
             android:textStyle="bold"
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toStartOf="@id/btn_potvrdi"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:text="Odustani"
+            android:text="@string/odustani"
             android:layout_marginBottom="8dp"/>
         <Button
             android:id="@+id/btn_potvrdi"
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:text="potvrdi"
+            android:text="@string/potvrdi"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>

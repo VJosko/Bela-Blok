@@ -65,7 +65,7 @@
             android:layout_width="0dp"
             android:layout_weight="0.7"
             android:layout_height="wrap_content"
-            android:text="Dijeli:"
+            android:text="@string/dijeli"
             android:textAlignment="textEnd"
             android:textSize="18sp"/>
 

@@ -68,6 +68,7 @@ public class DatabaseLegs extends SQLiteOpenHelper{
                     data.getInt(4),data.getInt(5),data.getInt(6),data.getInt(7));
             legs.add(leg);
         }
+        data.close();
         return legs;
     }
 
@@ -79,6 +80,7 @@ public class DatabaseLegs extends SQLiteOpenHelper{
         while(data.moveToNext()){
             nId = data.getInt(0);
         }
+        data.close();
         return nId;
     }
 
@@ -90,6 +92,7 @@ public class DatabaseLegs extends SQLiteOpenHelper{
         while(data.moveToNext()){
             nId = data.getInt(2);
         }
+        data.close();
         return nId;
     }
 
@@ -103,6 +106,7 @@ public class DatabaseLegs extends SQLiteOpenHelper{
                     data.getInt(4),data.getInt(5),data.getInt(6),data.getInt(7));
             legs.add(leg);
         }
+        data.close();
         return legs;
     }
 
@@ -114,6 +118,7 @@ public class DatabaseLegs extends SQLiteOpenHelper{
         while(data.moveToNext()){
             id = data.getInt(0);
         }
+        data.close();
         return id;
     }
 
@@ -125,6 +130,7 @@ public class DatabaseLegs extends SQLiteOpenHelper{
         while(data.moveToNext()){
             nDuplo = Integer.parseInt(data.getString(5));
         }
+        data.close();
         return nDuplo;
     }
 
@@ -140,6 +146,7 @@ public class DatabaseLegs extends SQLiteOpenHelper{
             Vi = data.getInt(4);
             x = data.getInt(6);
         }
+        data.close();
         if((Mi >= x || Vi >= x) && (Mi != Vi)){
             return true;
         }
@@ -181,6 +188,12 @@ public class DatabaseLegs extends SQLiteOpenHelper{
     public void deleteLeg(int id){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM " + TABLE_NAME + " WHERE " + COL0 + " = " + id;
+        db.execSQL(query);
+    }
+
+    public void isprazniBazu(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + TABLE_NAME;
         db.execSQL(query);
     }
 }

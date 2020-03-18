@@ -27,7 +27,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="Unesite imena igrača"
+                    android:text="@string/imenaIgraca"
                     android:textSize="20sp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="3dp"
@@ -51,7 +51,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:hint="Suigrač"
+                    android:hint="@string/suigrac"
                     android:textAlignment="center"
                     android:maxLines="1"/>
 
@@ -73,7 +73,7 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:hint="Lijevi"
+                    android:hint="@string/lijevi"
                     android:textAlignment="center"
                     android:maxLines="1"/>
 
@@ -88,7 +88,7 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
-                    android:hint="Desni"
+                    android:hint="@string/desni"
                     android:textAlignment="center"
                     android:maxLines="1"/>
 
@@ -109,7 +109,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:hint="Ja"
+                    android:hint="@string/ja"
                     android:textAlignment="center"
                     android:maxLines="1"/>
 
@@ -132,7 +132,7 @@
                     app:layout_constraintEnd_toStartOf="@id/btn_dalje"
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_marginBottom="8dp"
-                    android:text="Odustani" />
+                    android:text="@string/odustani" />
 
                 <Button
                     android:id="@+id/btn_dalje"
@@ -142,7 +142,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp"
-                    android:text="Dalje" />
+                    android:text="@string/dalje" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

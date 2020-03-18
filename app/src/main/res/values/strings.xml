@@ -11,6 +11,21 @@
     <string name="miD">MI</string>
     <string name="viD">VI</string>
     <string name="upisi">Upiši</string>
+    <string name="postavke">Postavke</string>
+    <string name="bodoviZaP">Bodovi za pobjedu: </string>
+    <string name="dupliBodovi">Dupli bodovi</string>
+    <string name="tamnaTema">Tamna tema</string>
+    <string name="dijeli">Dijeli:</string>
+    <string name="potrebniBodovi">Potrebni bodovi za pobjedu: </string>
+    <string name="odustani">Odustani</string>
+    <string name="potvrdi">Potvrdi</string>
+    <string name="imenaIgraca">Unesite imena igrača</string>
+    <string name="suigrac">Suigrač</string>
+    <string name="lijevi">Lijevi</string>
+    <string name="desni">Desni</string>
+    <string name="ja">Ja</string>
+    <string name="dalje">Dalje</string>
+    <string name="izadi">Izađi</string>
 
     <string name="intent_message">intent_message</string>
 

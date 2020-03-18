@@ -25,7 +25,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Postavke"
+            android:text="@string/postavke"
             android:textSize="25sp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -60,7 +60,7 @@
             android:id="@+id/tv_bodovi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Bodovi za pobjedu: "
+            android:text="@string/bodoviZaP"
             android:textSize="18dp"/>
 
         <Button
@@ -88,7 +88,7 @@
             android:id="@+id/duplo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dupli bodovi"
+            android:text="@string/dupliBodovi"
             android:textSize="18dp"/>
 
         <CheckBox
@@ -108,19 +108,47 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:layout_marginStart="16dp">
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="5dp">
 
         <TextView
             android:id="@+id/tema"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tamna tema"
+            android:text="@string/tamnaTema"
             android:textSize="18dp"/>
 
         <CheckBox
             android:id="@+id/cb_tema"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="18dp"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#383838"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Obriši povijest: "
+            android:textSize="18dp"/>
+
+        <Button
+            android:id="@+id/btn_obrisi_povijest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="obriši"
             android:textSize="18dp"/>
 
     </LinearLayout>

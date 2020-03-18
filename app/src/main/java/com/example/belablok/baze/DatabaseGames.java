@@ -71,6 +71,7 @@ public class DatabaseGames extends SQLiteOpenHelper {
                     data.getInt(6), data.getString(7));
             games.add(game);
         }
+        data.close();
         return games;
     }
 
@@ -82,6 +83,7 @@ public class DatabaseGames extends SQLiteOpenHelper {
         while(data.moveToNext()){
             nId = data.getInt(0);
         }
+        data.close();
         return nId;
     }
 
@@ -97,6 +99,7 @@ public class DatabaseGames extends SQLiteOpenHelper {
             igraci.add(data.getString(3));
             igraci.add(data.getString(4));
         }
+        data.close();
         return igraci;
     }
 
@@ -109,6 +112,7 @@ public class DatabaseGames extends SQLiteOpenHelper {
             rez[0] = data.getInt(5);
             rez[1] = data.getInt(6);
         }
+        data.close();
         return rez;
     }
 
@@ -125,5 +129,11 @@ public class DatabaseGames extends SQLiteOpenHelper {
                     ") WHERE ID = " + id;
             db.execSQL(query);
         }
+    }
+
+    public void isprazniBazu(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + TABLE_NAME;
+        db.execSQL(query);
     }
 }

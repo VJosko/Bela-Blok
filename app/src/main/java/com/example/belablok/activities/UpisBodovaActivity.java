@@ -2,17 +2,21 @@ package com.example.belablok.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.belablok.R;
 import com.example.belablok.baze.DatabaseLegs;
@@ -342,34 +346,48 @@ public class UpisBodovaActivity extends AppCompatActivity {
         } catch (NumberFormatException ex){
             nZvanjaVi = 0;
         }
-        int nMjesa;
-        if(mDatabaseLegs.getLastId() == mDatabaseUpisi.getLastLegId()){
-            nMjesa = mDatabaseUpisi.getLastMjesao() + 1;
-            if(nMjesa == 4){
-                nMjesa = 0;
+        if(nBodoviMi != nBodoviVi) {
+            int nMjesa;
+            if (mDatabaseLegs.getLastId() == mDatabaseUpisi.getLastLegId()) {
+                nMjesa = mDatabaseUpisi.getLastMjesao() + 1;
+                if (nMjesa == 4) {
+                    nMjesa = 0;
+                }
+            } else {
+                nMjesa = Integer.parseInt(mPreferences.getString("mjesa", "0"));
             }
+
+            //rezultat
+            mDatabaseLegs.updateRezultate(mDatabaseLegs.getLastId(), nBodoviMi + nZvanjaMi, nBodoviVi + nZvanjaVi);
+            mDatabaseLegs.updateZadnjiMjesao(mDatabaseLegs.getLastId(), nMjesa);
+
+            int Mjesa = Integer.parseInt(mPreferences.getString("mjesa", "0")) + 1;
+            if (Mjesa > 3) {
+                Mjesa = 0;
+            }
+            String sMjesa = Integer.toString(Mjesa);
+            mEditor.putString("mjesa", sMjesa);
+            mEditor.commit();
+
+            Upis upis = new Upis(mDatabaseLegs.getLastId(), mDatabaseUpisi.getNewRbr(mDatabaseLegs.getLastId()), nBodoviMi, nBodoviVi, nZvanjaMi, nZvanjaVi, nMjesa);
+            mDatabaseUpisi.addData(upis);
+            Intent intent = new Intent(UpisBodovaActivity.this, RezultatActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         }
         else{
-            nMjesa = Integer.parseInt(mPreferences.getString("mjesa", "0"));
+            LayoutInflater inflater = getLayoutInflater();
+            View layout = inflater.inflate(R.layout.custom_toast,
+                    (ViewGroup) findViewById(R.id.custom_toast_container));
+
+            TextView text = (TextView) layout.findViewById(R.id.text);
+            text.setText("Pogrešan upis");
+
+            Toast toast = new Toast(getApplicationContext());
+            toast.setDuration(Toast.LENGTH_SHORT);
+            toast.setView(layout);
+            toast.show();
         }
-
-        //rezultat
-        mDatabaseLegs.updateRezultate(mDatabaseLegs.getLastId(), nBodoviMi + nZvanjaMi, nBodoviVi + nZvanjaVi );
-        mDatabaseLegs.updateZadnjiMjesao(mDatabaseLegs.getLastId(), nMjesa);
-
-        int Mjesa = Integer.parseInt(mPreferences.getString("mjesa", "0")) + 1;
-        if(Mjesa > 3){
-            Mjesa = 0;
-        }
-        String sMjesa = Integer.toString(Mjesa);
-        mEditor.putString("mjesa", sMjesa);
-        mEditor.commit();
-
-        Upis upis =new Upis(mDatabaseLegs.getLastId(), mDatabaseUpisi.getNewRbr(mDatabaseLegs.getLastId()), nBodoviMi, nBodoviVi, nZvanjaMi, nZvanjaVi, nMjesa);
-        mDatabaseUpisi.addData(upis);
-        Intent intent = new Intent(UpisBodovaActivity.this, RezultatActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
     }
 
     void Zbroj(){

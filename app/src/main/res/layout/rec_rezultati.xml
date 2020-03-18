@@ -22,7 +22,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="TextView"
+            android:text=""
             android:textSize="40sp"
             android:textAlignment="center"/>
 
@@ -32,7 +32,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="TextView"
+            android:text=""
             android:textSize="40sp"
             android:textAlignment="center"/>
 

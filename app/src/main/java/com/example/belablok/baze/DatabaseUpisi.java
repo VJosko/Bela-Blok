@@ -73,6 +73,7 @@ public class DatabaseUpisi extends SQLiteOpenHelper {
                     data.getInt(6),data.getInt(7));
             upisi.add(upis);
         }
+        data.close();
         return upisi;
     }
 
@@ -87,6 +88,7 @@ public class DatabaseUpisi extends SQLiteOpenHelper {
                     data.getInt(6),data.getInt(7));
             upisi.add(upis);
         }
+        data.close();
         return upisi;
     }
 
@@ -98,6 +100,7 @@ public class DatabaseUpisi extends SQLiteOpenHelper {
         while(data.moveToNext()){
             nId = data.getInt(0);
         }
+        data.close();
         return nId;
     }
 
@@ -109,6 +112,7 @@ public class DatabaseUpisi extends SQLiteOpenHelper {
         while(data.moveToNext()){
             nLegId = data.getInt(1);
         }
+        data.close();
         return nLegId;
     }
 
@@ -120,6 +124,7 @@ public class DatabaseUpisi extends SQLiteOpenHelper {
         while(data.moveToNext()){
             nMjesao = data.getInt(7);
         }
+        data.close();
         return nMjesao;
     }
 
@@ -141,6 +146,7 @@ public class DatabaseUpisi extends SQLiteOpenHelper {
                 rez[1] += 1;
             }
         }
+        data.close();
         return rez;
     }
 
@@ -152,6 +158,7 @@ public class DatabaseUpisi extends SQLiteOpenHelper {
         while(data.moveToNext()){
             nId = data.getInt(0);
         }
+        data.close();
         return nId;
     }
 
@@ -163,6 +170,7 @@ public class DatabaseUpisi extends SQLiteOpenHelper {
         while(data.moveToNext()){
             nId = data.getInt(2);
         }
+        data.close();
         return nId;
     }
 
@@ -187,7 +195,7 @@ public class DatabaseUpisi extends SQLiteOpenHelper {
             bodovi[2] = data.getInt(5);
             bodovi[3] = data.getInt(6);
         }
-
+        data.close();
         return bodovi;
     }
 
@@ -215,6 +223,7 @@ public class DatabaseUpisi extends SQLiteOpenHelper {
                 COL1 + " = " + getLastLegId() + " AND " + COL2 + " > " + rbr;
         db.execSQL(query);
 
+        data.close();
         return upis;
     }
 
@@ -233,6 +242,12 @@ public class DatabaseUpisi extends SQLiteOpenHelper {
         }
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "UPDATE " + TABLE_NAME + " SET " + COL7 + " = " + nMjesa + " WHERE " + COL0 + " = " + getLastUpisId();
+        db.execSQL(query);
+    }
+
+    public void isprazniBazu(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + TABLE_NAME;
         db.execSQL(query);
     }
 
