@@ -112,6 +112,61 @@
         android:layout_marginBottom="5dp">
 
         <TextView
+            android:id="@+id/racunanje"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/racunanje"
+            android:textSize="18sp"/>
+
+        <CheckBox
+            android:id="@+id/cb_racunanje"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#383838"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="5dp">
+
+        <TextView
+            android:id="@+id/tv_macki"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/vrijednost_macki"
+            android:textSize="18dp"/>
+
+        <Button
+            android:id="@+id/btn_macki"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="90"
+            android:textSize="18dp"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#383838"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="5dp">
+
+        <TextView
             android:id="@+id/tema"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

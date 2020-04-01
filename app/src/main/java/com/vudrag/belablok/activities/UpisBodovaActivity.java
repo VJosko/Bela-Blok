@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +29,9 @@ public class UpisBodovaActivity extends AppCompatActivity {
     private SharedPreferences mPreferences;
     private SharedPreferences.Editor mEditor;
 
+    private View razmak;
+    private RadioGroup radioGroup;
+    private RadioButton rbZvaliMi, rbZvaliVi;
     private ImageButton ibtn_natrag, ibtn_postavke;
     private TextView tvZbrojeniRezultatMi;
     private TextView tvZbrojeniRezultatVi;
@@ -64,6 +69,20 @@ public class UpisBodovaActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_upis_bodova);
 
+        String racunanje = mPreferences.getString("racunanje","1");
+        radioGroup = findViewById(R.id.radio_group);
+        razmak = findViewById(R.id.v_razmak);
+        if(racunanje.equals("1")){
+            radioGroup.setVisibility(View.VISIBLE);
+            razmak.setVisibility(View.GONE);
+        }
+        else{
+            radioGroup.setVisibility(View.GONE);
+            razmak.setVisibility(View.VISIBLE);
+        }
+
+        rbZvaliMi = findViewById(R.id.zvali_mi);
+        rbZvaliVi = findViewById(R.id.zvali_vi);
         tvZbrojeniRezultatMi = findViewById(R.id.tv_zbrojeni_rezultat_mi);
         tvZbrojeniRezultatVi = findViewById(R.id.tv_zbrojeni_rezultat_vi);
         oBtnNoviUpis = findViewById(R.id.btn_upisi);
@@ -293,6 +312,16 @@ public class UpisBodovaActivity extends AppCompatActivity {
         if(sTema != mPreferences.getString("tema", "tamna")){
             recreate();
         }
+        String racunanje = mPreferences.getString("racunanje","1");
+        radioGroup = findViewById(R.id.radio_group);
+        if(racunanje.equals("1")){
+            radioGroup.setVisibility(View.VISIBLE);
+            razmak.setVisibility(View.GONE);
+        }
+        else{
+            radioGroup.setVisibility(View.GONE);
+            razmak.setVisibility(View.VISIBLE);
+        }
     }
 
     void UrediUpis(){
@@ -345,7 +374,31 @@ public class UpisBodovaActivity extends AppCompatActivity {
         } catch (NumberFormatException ex){
             nZvanjaVi = 0;
         }
-        if(nBodoviMi != nBodoviVi) {
+        if(mPreferences.getString("racunanje", "1").equals("1")) {
+            if (rbZvaliMi.isChecked()) {
+                if (nBodoviMi + nZvanjaMi <= nBodoviVi + nZvanjaVi) {
+                    nBodoviMi = 0;
+                    nBodoviVi = 162;
+                    nZvanjaVi += nZvanjaMi;
+                    nZvanjaMi = 0;
+                } else if (nBodoviVi == 0) {
+                    nZvanjaMi += nZbrojVi + mPreferences.getInt("macki", 90);
+                    nZvanjaVi = 0;
+                }
+            } else if (rbZvaliVi.isChecked()) {
+                if (nBodoviMi + nZvanjaMi >= nBodoviVi + nZvanjaVi) {
+                    nBodoviVi = 0;
+                    nBodoviMi = 162;
+                    nZvanjaMi += nZvanjaVi;
+                    nZvanjaVi = 0;
+                } else if (nBodoviMi == 0) {
+                    nZvanjaVi += nZvanjaMi + mPreferences.getInt("macki", 90);
+                    nZvanjaMi = 0;
+                }
+            }
+        }
+        if(nBodoviMi + nZvanjaMi != nBodoviVi + nZvanjaVi)
+        {
             int nMjesa;
             if (mDatabaseLegs.getLastId() == mDatabaseUpisi.getLastLegId()) {
                 nMjesa = mDatabaseUpisi.getLastMjesao() + 1;

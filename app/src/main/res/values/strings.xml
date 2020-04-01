@@ -28,5 +28,7 @@
     <string name="izadi">Izađi</string>
 
     <string name="intent_message">intent_message</string>
+    <string name="vrijednost_macki">Vrijednost mački/štiglje: </string>
+    <string name="racunanje">Računanje padova i mački/štiglji</string>
 
 </resources>

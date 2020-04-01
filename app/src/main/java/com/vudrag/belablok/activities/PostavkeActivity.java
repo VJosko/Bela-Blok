@@ -19,8 +19,10 @@ import com.vudrag.belablok.baze.DatabaseLegs;
 import com.vudrag.belablok.baze.DatabaseUpisi;
 import com.vudrag.belablok.dialog.DialogBodovi;
 import com.vudrag.belablok.dialog.DialogBrisanjePovijesti;
+import com.vudrag.belablok.dialog.DialogMacki;
 
-public class PostavkeActivity extends AppCompatActivity implements DialogBodovi.OdabirBodova, DialogBrisanjePovijesti.potvrdaBrisanja {
+public class PostavkeActivity extends AppCompatActivity implements DialogBodovi.OdabirBodova,
+        DialogBrisanjePovijesti.potvrdaBrisanja, DialogMacki.OdabirMacki {
 
     private static final String TAG = "PostavkeActivity";
 
@@ -28,8 +30,8 @@ public class PostavkeActivity extends AppCompatActivity implements DialogBodovi.
     DatabaseLegs mDatabaseLegs = new DatabaseLegs(this);
     DatabaseUpisi mDatabaseUpisi = new DatabaseUpisi(this);
 
-    private CheckBox cbDuplo, cbTema;
-    private Button btnBodovi;
+    private CheckBox cbDuplo, cbTema, cbRacunanje;
+    private Button btnBodovi, btnMacki;
     private TextView tvBodovi;
     private ImageButton ibtnNatrag;
     private Button btnObrisi;
@@ -61,6 +63,8 @@ public class PostavkeActivity extends AppCompatActivity implements DialogBodovi.
             }
         });
 
+        cbRacunanje = findViewById(R.id.cb_racunanje);
+        btnMacki =findViewById(R.id.btn_macki);
         cbDuplo = findViewById(R.id.cb_duplo);
         btnBodovi = findViewById(R.id.btn_bodovi);
         tvBodovi = findViewById(R.id.tv_bodovi);
@@ -84,6 +88,20 @@ public class PostavkeActivity extends AppCompatActivity implements DialogBodovi.
                     if(!mDatabaseLegs.isLegGotov(mDatabaseLegs.getLastId())){
                         mDatabaseLegs.updateDuplo(mDatabaseLegs.getLastId(), "0");
                     }
+                }
+                mEditor.commit();
+            }
+        });
+
+        //Racunanje ako padas
+        cbRacunanje.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    mEditor.putString("racunanje", "1");
+                }
+                else{
+                    mEditor.putString("racunanje", "0");
                 }
                 mEditor.commit();
             }
@@ -115,6 +133,15 @@ public class PostavkeActivity extends AppCompatActivity implements DialogBodovi.
             }
         });
 
+        //Odabir macki
+        btnMacki.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogMacki dialogMacki = new DialogMacki();
+                dialogMacki.show(getSupportFragmentManager(), "DialogMacki");
+            }
+        });
+
         //Brisanje povijesti
         btnObrisi.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,6 +156,8 @@ public class PostavkeActivity extends AppCompatActivity implements DialogBodovi.
         String duplo = mPreferences.getString("duplo", "0");
         String bodovi = mPreferences.getString("bodovi", "1001");
         String tema = mPreferences.getString("tema", "tamna");
+        String racunanje = mPreferences.getString("racunanje", "1");
+        int macki = mPreferences.getInt("macki", 90);
 
         if(duplo.equals("1")){
             cbDuplo.setChecked(true);
@@ -139,6 +168,12 @@ public class PostavkeActivity extends AppCompatActivity implements DialogBodovi.
         if(tema.equals("tamna")){
             cbTema.setChecked(true);
         }
+
+        if(racunanje.equals("1")){
+            cbRacunanje.setChecked(true);
+        }
+
+        btnMacki.setText(Integer.toString(macki));
     }
 
     @Override
@@ -157,5 +192,12 @@ public class PostavkeActivity extends AppCompatActivity implements DialogBodovi.
         mDatabaseGames.isprazniBazu();
         mDatabaseLegs.isprazniBazu();
         mDatabaseUpisi.isprazniBazu();
+    }
+
+    @Override
+    public void sendInputMacki(int sBodovi) {
+        mEditor.putInt("macki", sBodovi);
+        mEditor.commit();
+        btnMacki.setText(Integer.toString(sBodovi));
     }
 }
